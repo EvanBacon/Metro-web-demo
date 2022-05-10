@@ -1,0 +1,13 @@
+diff --git a/node_modules/babel-preset-expo/index.js b/node_modules/babel-preset-expo/index.js
+index 62a897b..808cccb 100644
+--- a/node_modules/babel-preset-expo/index.js
++++ b/node_modules/babel-preset-expo/index.js
+@@ -16,7 +16,7 @@ module.exports = function (api, options = {}) {
+   }
+ 
+   const platformOptions =
+-    platform === 'web'
++    platform === 'web' && isWebpack
+       ? { disableImportExportTransform: true, ...web }
+       : { disableImportExportTransform: false, ...native };
+ 
