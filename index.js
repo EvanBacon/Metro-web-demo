@@ -1,5 +1,5 @@
-import "./fast-refresh/setUpDeveloperTools";
-import "./fast-refresh/messages/setup";
+import "./runtime/setUpDeveloperTools";
+import "./runtime/messages/setup";
 
 import { registerRootComponent } from "expo";
 
