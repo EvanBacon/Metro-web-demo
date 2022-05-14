@@ -2,6 +2,9 @@
 
 > This is a weekend project, I have no plans to land this in Expo.
 
+https://user-images.githubusercontent.com/9664363/168451003-bc2956bc-c878-4b92-9bdf-b34425303d5b.mp4
+
+
 Demo of using Metro to bundle Expo apps for web. [Try the web demo](https://metro-web.netlify.app/) (notice the giant JavaScript bundle).
 
 This project also has full Fast Refresh support enabled and a few other React Native debugging features.
