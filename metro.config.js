@@ -23,12 +23,4 @@ config.resolver.extraNodeModules["react-native"] = path.resolve(
 );
 config.resolver.platforms = ["ios", "android", "web"];
 
-// if (!config.resolver.transformer) config.resolver.transformer = {};
-// config.resolver.transformer.getTransformOptions = async () => ({
-//   transform: {
-//     experimentalImportSupport: false,
-//     inlineRequires: false,
-//   },
-// });
-
 module.exports = config;
