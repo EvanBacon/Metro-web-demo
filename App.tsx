@@ -14,6 +14,7 @@ export default function App() {
         <H1 style={{
           fontSize: 50,
           fontWeight: 'bold',
+          textAlign: 'center',
           ...Platform.select({
             web: {
               backgroundClip: 'text',
@@ -27,8 +28,8 @@ export default function App() {
               color: '#FF0080'
             }
           })
-        }}>
-          Expo Web + Metro
+        }}>{`Expo ${Platform.OS} + Metro`}
+
         </H1>
         <A ref={ref} style={{
 

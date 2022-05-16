@@ -1,6 +1,4 @@
-import "./runtime/setUpDeveloperTools";
-import "./runtime/messages/setup";
-
+import "./runtime";
 import { registerRootComponent } from "expo";
 
 import App from "./App";
