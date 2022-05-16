@@ -18,7 +18,7 @@ export default function App() {
           ...Platform.select({
             web: {
               backgroundClip: 'text',
-              webkitBackgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
               textFillColor: 'transparent',
               color: 'transparent',
               backgroundClip: 'text',
