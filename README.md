@@ -4,7 +4,6 @@
 
 https://user-images.githubusercontent.com/9664363/168451003-bc2956bc-c878-4b92-9bdf-b34425303d5b.mp4
 
-
 Demo of using Metro to bundle Expo apps for web. [Try the web demo](https://metro-web.netlify.app/) (notice the giant JavaScript bundle).
 
 This project also has full Fast Refresh support enabled and a few other React Native debugging features.
@@ -24,4 +23,5 @@ You can also bundle the project by running `expo export` then test locally with 
 
 ## Further Work
 
-- Web and native cannot be run at the same time because Metro hard codes the usage of `.native.js` files. In my project, the `preferNativePlatform` value has been turned off in a patch (breaking native).
+- Improve the rudimentary bundling practices across platforms. There should be at least some concept of bundle splitting.
+- ~~Web and native cannot be run at the same time because Metro hard codes the usage of `.native.js` files. In my project, the `preferNativePlatform` value has been turned off in a patch (breaking native).~~
