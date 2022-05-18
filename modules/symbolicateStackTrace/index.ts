@@ -27,7 +27,8 @@ async function symbolicateStackTrace(
 ): Promise<SymbolicatedStackTrace> {
   // Lazy-load `fetch` until the first symbolication call to avoid circular requires.
 
-  const response = await fetch(window.location.host + "?symbolicate", {
+  const baseUrl = window.location.protocol + "//" + window.location.host;
+  const response = await fetch(baseUrl + "/symbolicate", {
     method: "POST",
     body: JSON.stringify({ stack }),
   });

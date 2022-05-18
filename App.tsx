@@ -9,6 +9,7 @@ import { useHover } from 'react-native-web-hooks';
 export default function App() {
   const ref = useRef(null)
   const hover = useHover(ref)
+  console.warn('hey :)')
   return (
     <View style={styles.container}>
       <Main style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

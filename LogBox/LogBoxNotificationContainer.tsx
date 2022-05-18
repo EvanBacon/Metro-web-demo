@@ -45,6 +45,7 @@ export function _LogBoxNotificationContainer(props: Props) {
     return null;
   }
 
+
   const warnings = logs.filter(log => log.level === 'warn');
   const errors = logs.filter(
     log => log.level === 'error' || log.level === 'fatal',
