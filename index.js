@@ -1,4 +1,11 @@
 import "./runtime";
+
+import { Platform } from "react-native";
+
+if (__DEV__ && Platform === "web") {
+  require("./LogBox/LogBox").install();
+}
+
 import { registerRootComponent } from "expo";
 
 import App from "./App";
