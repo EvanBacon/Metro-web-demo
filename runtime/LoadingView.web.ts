@@ -19,5 +19,7 @@ export function hide() {
 
 export function dismissBuildError() {
   // TODO: Add a proper dismiss build error from react-error-overlay
-  console.clear();
+  // console.clear();
+  const LogBoxData = require("../LogBox/Data/LogBoxData");
+  LogBoxData.clear();
 }

@@ -274,3 +274,5 @@ if (__DEV__) {
 }
 
 module.exports = LogBox;
+
+export default LogBox;

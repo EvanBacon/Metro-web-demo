@@ -244,6 +244,7 @@ export function clear(): void {
   if (logs.size > 0) {
     logs = new Set();
     setSelectedLog(-1);
+    // console.clear();
   }
 }
 

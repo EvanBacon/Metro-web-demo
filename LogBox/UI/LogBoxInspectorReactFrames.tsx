@@ -153,14 +153,14 @@ const componentStyles = StyleSheet.create({
     paddingRight: 10,
   },
   frameName: {
-    fontFamily: Platform.select({ android: 'monospace', ios: 'Menlo' }),
+    fontFamily: Platform.select({ default: 'Courier', ios: 'Courier New', android: 'monospace' }),
     color: LogBoxStyle.getTextColor(1),
     fontSize: 14,
     includeFontPadding: false,
     lineHeight: 18,
   },
   bracket: {
-    fontFamily: Platform.select({ android: 'monospace', ios: 'Menlo' }),
+    fontFamily: Platform.select({ default: 'Courier', ios: 'Courier New', android: 'monospace' }),
     color: LogBoxStyle.getTextColor(0.4),
     fontSize: 14,
     fontWeight: '500',

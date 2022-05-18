@@ -110,7 +110,10 @@ const headerStyles = StyleSheet.create({
     marginTop: 5,
     marginRight: 6,
     marginLeft: 6,
-    marginBottom: -8,
+    marginBottom: Platform.select({
+      web: 0,
+      default: -8
+    }),
     borderRadius: 3,
   },
   buttonImage: {
@@ -136,7 +139,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     height: Platform.select({
-      android: 48,
+      default: 48,
       ios: 44,
     }),
   },
@@ -153,7 +156,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   safeArea: {
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 40,
+    paddingTop: Platform.OS !== 'ios' ? StatusBar.currentHeight : 40,
   },
 });
 

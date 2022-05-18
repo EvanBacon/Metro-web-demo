@@ -16,7 +16,7 @@ const prettyFormat = require("pretty-format");
 
 import getDevServer from "./getDevServer";
 import NativeRedBox from "./NativeRedBox";
-import LogBox from "./LogBox";
+import LogBox from "../LogBox/LogBox";
 //  import type {ExtendedError} from '../Core/ExtendedError';
 
 const pendingEntryPoints = [];

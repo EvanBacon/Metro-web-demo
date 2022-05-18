@@ -62,7 +62,7 @@ index 0002b37..5e8cb9f 100644
 +{"version":3,"file":"DevLoadingView.d.ts","sourceRoot":"","sources":["../../src/environment/DevLoadingView.tsx"],"names":[],"mappings":"AAYA,MAAM,CAAC,OAAO,UAAU,cAAc,uBAuFrC"}
 \ No newline at end of file
 diff --git a/node_modules/expo/build/environment/DevLoadingView.js b/node_modules/expo/build/environment/DevLoadingView.js
-index 4a2a7b7..66f3909 100644
+index 4a2a7b7..50cbc24 100644
 --- a/node_modules/expo/build/environment/DevLoadingView.js
 +++ b/node_modules/expo/build/environment/DevLoadingView.js
 @@ -1,12 +1,13 @@
@@ -81,6 +81,15 @@ index 4a2a7b7..66f3909 100644
          }
          catch (error) {
              throw new Error('Failed to instantiate native emitter in `DevLoadingView` because the native module `DevLoadingView` is undefined: ' +
+@@ -37,7 +38,7 @@ export default function DevLoadingView() {
+                 toValue: 150,
+                 delay: 1000,
+                 duration: 350,
+-                useNativeDriver: true,
++                useNativeDriver: Platform.OS !== 'web',
+             }).start(({ finished }) => {
+                 if (finished) {
+                     setIsAnimating(false);
 @@ -65,12 +66,19 @@ export default function DevLoadingView() {
          return null;
      }

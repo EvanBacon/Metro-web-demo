@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     includeFontPadding: false,
     lineHeight: 20,
-    fontFamily: Platform.select({ android: 'monospace', ios: 'Menlo' }),
+    fontFamily: Platform.select({ default: 'Courier', ios: 'Courier New', android: 'monospace' }),
   },
   fileText: {
     color: LogBoxStyle.getTextColor(0.5),
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     includeFontPadding: false,
     lineHeight: 16,
-    fontFamily: Platform.select({ android: 'monospace', ios: 'Menlo' }),
+    fontFamily: Platform.select({ default: 'Courier', ios: 'Courier New', android: 'monospace' }),
   },
 });
 
