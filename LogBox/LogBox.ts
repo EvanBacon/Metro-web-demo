@@ -62,11 +62,9 @@ if (__DEV__) {
         originalConsoleError = console.error.bind(console);
         originalConsoleWarn = console.warn.bind(console);
 
-        // $FlowExpectedError[cannot-write]
         console.error = (...args) => {
           consoleErrorImpl(...args);
         };
-        // $FlowExpectedError[cannot-write]
         console.warn = (...args) => {
           consoleWarnImpl(...args);
         };

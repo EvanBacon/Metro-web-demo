@@ -6,7 +6,7 @@
  */
 
 import UTFSequence from 'react-native/Libraries/UTFSequence';
-import stringifySafe from 'react-native/Libraries/Utilities/stringifySafe';
+import stringifySafe from '../../modules/stringifySafe';
 type ExceptionData = any;
 // import type { ExceptionData } from '../../Core/NativeExceptionsManager';
 import type { LogBoxLogData } from './LogBoxLog';
