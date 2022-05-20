@@ -17,8 +17,7 @@ Object.defineProperty(NativeModules, "DevLoadingView", {
  */
 if (__DEV__) {
   if (!global.__RCTProfileIsProfiling) {
-    require("./setUpReactDevTools");
-
+    // require("./setUpReactDevTools");
     //   // Set up inspector
     //   const JSInspector = require('../JSInspector/JSInspector');
     //   JSInspector.registerAgent(require('../JSInspector/NetworkAgent'));

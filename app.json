@@ -22,12 +22,14 @@
       "bundleIdentifier": "com.bacon.yolo96"
     },
     "android": {
+      "bundler": "webpack",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
+      "bundler": "metro",
       "favicon": "./assets/favicon.png"
     }
   }

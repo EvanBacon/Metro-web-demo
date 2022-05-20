@@ -5,7 +5,6 @@ if (__DEV__) {
 
   const Refresh = {
     performFullRefresh(reason) {
-      console.log("perform full refresh");
       const DevSettings = require("./DevSettings").default;
       DevSettings.reload(reason);
     },
@@ -20,7 +19,6 @@ if (__DEV__) {
     register: ReactRefreshRuntime.register,
 
     performReactRefresh() {
-      console.log("perform react refresh");
       const DevSettings = require("./DevSettings").default;
       if (ReactRefreshRuntime.hasUnrecoverableErrors()) {
         DevSettings.reload("Fast Refresh - Unrecoverable");
