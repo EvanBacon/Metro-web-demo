@@ -14,7 +14,7 @@ if (__DEV__) {
         window.location.reload();
         break;
       case "devMenu":
-        alert("[dev menu]");
+        // alert("[dev menu]");
         break;
     }
   };

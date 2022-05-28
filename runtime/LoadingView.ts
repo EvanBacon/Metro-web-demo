@@ -1,29 +1,17 @@
-export function showMessage(...args: string[]) {
-  return require("react-native/Libraries/Utilities/LoadingView").showMessage(
-    ...args
-  );
+import { SyntheticPlatformEmitter } from "expo-modules-core";
+
+export function showMessage(message: string, type: "load" | "refresh") {
+  SyntheticPlatformEmitter.emit("devLoadingView:showMessage", {
+    message,
+  });
 }
 
-export function hide(...args: string[]) {
-  return require("react-native/Libraries/Utilities/LoadingView").hide(...args);
+export function hide() {
+  SyntheticPlatformEmitter.emit("devLoadingView:hide", {});
 }
 
 export function dismissBuildError() {
   // TODO: Add a proper dismiss build error from react-error-overlay
-
-  const platform = require("react-native").Platform.OS;
-  if (platform === "ios") {
-    const NativeRedBox =
-      require("react-native/Libraries/NativeModules/specs/NativeRedBox").default;
-    NativeRedBox?.dismiss?.();
-  } else if (platform === "android") {
-    const NativeExceptionsManager =
-      require("react-native/Libraries/Core/NativeExceptionsManager").default;
-    NativeExceptionsManager?.dismissRedbox();
-  } else {
-    console.clear();
-    return;
-  }
-  const LogBoxData = require("react-native/Libraries/LogBox/Data/LogBoxData");
-  LogBoxData.clear();
+  // in RN they use LogBox but this is pretty wild for web.
+  console.clear();
 }
