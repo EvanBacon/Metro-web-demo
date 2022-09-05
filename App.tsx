@@ -1,13 +1,10 @@
 import { A, Footer, H1, H3, Main } from '@expo/html-elements';
-import { StatusBar } from 'expo-status-bar';
 import { useRef } from 'react';
 import { StyleSheet, Platform, View } from 'react-native';
-import { useHover } from 'react-native-web-hooks';
 
 
 export default function App() {
   const ref = useRef(null)
-  const hover = useHover(ref)
   return (
     <View style={styles.container}>
       <Main style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -36,7 +33,7 @@ export default function App() {
           fontSize: 24,
           fontWeight: 'bold',
           color: '#fff',
-          opacity: hover ? 0.5 : 1,
+          opacity: 1,
           ...Platform.select({
             web: {
               transitionDuration: '500ms',
@@ -55,7 +52,6 @@ export default function App() {
           color: '#b7b8bf',
         }} >('Inspect Element > Sources' to see bundle results)</H3>
       </Footer>
-      <StatusBar style="auto" />
     </View>
   );
 }
