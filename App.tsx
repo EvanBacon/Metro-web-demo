@@ -2,13 +2,13 @@ import { A, Footer, H1, H3, Main } from '@expo/html-elements';
 import { StatusBar } from 'expo-status-bar';
 import { useRef } from 'react';
 import { StyleSheet, Platform, View } from 'react-native';
-import { useHover } from 'react-native-web-hooks';
+// import { useHover } from 'react-native-web-hooks';
 
 // >
 
 export default function App() {
   const ref = useRef(null)
-  const hover = useHover(ref)
+  // const hover = useHover(ref)
   console.error('hey :)')
   return (
     <View style={styles.container}>
@@ -40,7 +40,7 @@ export default function App() {
           fontSize: 24,
           fontWeight: 'bold',
           color: '#fff',
-          opacity: hover ? 0.5 : 1,
+          // opacity: hover ? 0.5 : 1,
           ...Platform.select({
             web: {
               transitionDuration: '500ms',

@@ -1,4 +1,10 @@
-import "./runtime";
+import "@bacons/expo-metro-runtime";
+
+if (!global.setImmediate) {
+  global.setImmediate = function (fn) {
+    return setTimeout(fn, 0);
+  };
+}
 
 import { Platform } from "react-native";
 
