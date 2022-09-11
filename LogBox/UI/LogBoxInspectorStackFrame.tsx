@@ -1,20 +1,23 @@
 /**
+ * Copyright (c) Evan Bacon.
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import * as React from 'react';
-import { GestureResponderEvent, Platform, StyleSheet, Text, View } from 'react-native';
+import { GestureResponderEvent, StyleSheet, Text, View } from 'react-native';
 
+import { CODE_FONT } from './constants';
 import { LogBoxButton } from './LogBoxButton';
 import * as LogBoxStyle from './LogBoxStyle';
 
-
-// import type { StackFrame } from '../../Core/NativeExceptionsManager';
-
-// TODO: This
-type StackFrame = any;
+export type StackFrame = {
+  column?: number | string,
+  file?: string,
+  lineNumber?: number,
+  methodName: string,
+  collapse?: boolean,
+};
 
 type Props = {
   frame: StackFrame,
@@ -23,7 +26,7 @@ type Props = {
 
 export function LogBoxInspectorStackFrame(props: Props) {
   const { frame, onPress } = props;
-  const column = frame.column != null && parseInt(frame.column, 10);
+  const column = frame.column != null && parseInt(String(frame.column), 10);
   const location =
     getFileName(frame.file) +
     (frame.lineNumber != null
@@ -85,7 +88,7 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
     lineHeight: 18,
     fontWeight: '400',
-    fontFamily: Platform.select({ default: 'Courier', ios: 'Courier New', android: 'monospace' }),
+    fontFamily: CODE_FONT,
   },
   location: {
     color: LogBoxStyle.getTextColor(0.8),

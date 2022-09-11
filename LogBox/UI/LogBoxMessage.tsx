@@ -1,10 +1,10 @@
 /**
+ * Copyright (c) Evan Bacon.
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import * as React from 'react';
 import { StyleProp, Text, TextStyle } from 'react-native';
 
 import type { Message } from '../Data/parseLogBoxLog';
@@ -19,7 +19,7 @@ type Props = {
 const cleanContent = (content: string) =>
   content.replace(/^(TransformError |Warning: (Warning: )?|Error: )/g, '');
 
-export function LogBoxMessage(props: Props) {
+export function LogBoxMessage(props: Props): JSX.Element {
   const { content, substitutions }: Message = props.message;
 
   if (props.plaintext === true) {
@@ -28,7 +28,7 @@ export function LogBoxMessage(props: Props) {
 
   const maxLength = props.maxLength != null ? props.maxLength : Infinity;
   const substitutionStyle: StyleProp<TextStyle> = props.style;
-  const elements = [];
+  const elements: JSX.Element[] = [];
   let length = 0;
   const createUnderLength = (
     key: string | '-1',

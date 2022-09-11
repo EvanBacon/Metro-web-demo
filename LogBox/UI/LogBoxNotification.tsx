@@ -1,4 +1,5 @@
 /**
+ * Copyright (c) Evan Bacon.
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
@@ -6,7 +7,7 @@
  */
 
 import type { Message as MessageType } from '../Data/parseLogBoxLog';
-import * as React from 'react';
+import { useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { LogBoxButton } from './LogBoxButton';
 import * as LogBoxStyle from './LogBoxStyle';
@@ -26,7 +27,7 @@ export function LogBoxLogNotification(props: Props) {
   const { totalLogCount, level, log } = props;
 
   // Eagerly symbolicate so the stack is available when pressing to inspect.
-  React.useEffect(() => {
+  useEffect(() => {
     LogBoxData.symbolicateLogLazy(log);
   }, [log]);
 
@@ -63,7 +64,7 @@ function CountBadge(
   );
 }
 
-function Message(props: Partial<{ message: MessageType }>) {
+function Message(props: { message?: MessageType }) {
   return (
     <View style={messageStyles.container}>
       <Text numberOfLines={1} style={messageStyles.text}>
@@ -79,7 +80,7 @@ function Message(props: Partial<{ message: MessageType }>) {
   );
 }
 
-function DismissButton(props: Partial<{ onPress: () => void }>) {
+function DismissButton(props: { onPress?: () => void }) {
   return (
     <View style={dismissStyles.container}>
       <LogBoxButton

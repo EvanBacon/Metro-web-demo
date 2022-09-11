@@ -1,4 +1,5 @@
 /**
+ * Copyright (c) Evan Bacon.
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
@@ -105,25 +106,21 @@ export function LogBoxInspectorStackFrames(props: Props) {
   );
 }
 
-function StackFrameList(props) {
-  return (
-    <>
-      {props.list.map((frame, index) => {
-        const { file, lineNumber } = frame;
-        return (
-          <LogBoxInspectorStackFrame
-            key={index}
-            frame={frame}
-            onPress={
-              props.status === 'COMPLETE' && file != null && lineNumber != null
-                ? () => openFileInEditor(file, lineNumber)
-                : null
-            }
-          />
-        );
-      })}
-    </>
-  );
+function StackFrameList(props): JSX.Element {
+  return props.list.map((frame, index) => {
+    const { file, lineNumber } = frame;
+    return (
+      <LogBoxInspectorStackFrame
+        key={index}
+        frame={frame}
+        onPress={
+          props.status === 'COMPLETE' && file != null && lineNumber != null
+            ? () => openFileInEditor(file, lineNumber)
+            : null
+        }
+      />
+    );
+  });
 }
 
 function StackFrameFooter(

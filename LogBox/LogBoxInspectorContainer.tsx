@@ -1,14 +1,17 @@
 /**
+ * Copyright (c) Evan Bacon.
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import { useCallback } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
 import * as LogBoxData from './Data/LogBoxData';
 import { LogBoxInspector } from './UI/LogBoxInspector';
+
+
 import type { LogBoxLog } from './Data/LogBoxLog';
 
 type Props = {
@@ -17,26 +20,13 @@ type Props = {
   isDisabled?: boolean,
 };
 
-export class _LogBoxInspectorContainer extends Component<Props> {
-  render() {
-    return (
-      <View style={StyleSheet.absoluteFill}>
-        <LogBoxInspector
-          onDismiss={this._handleDismiss}
-          onMinimize={this._handleMinimize}
-          onChangeSelectedIndex={this._handleSetSelectedLog}
-          logs={this.props.logs}
-          selectedIndex={this.props.selectedLogIndex}
-        />
-      </View>
-    );
-  }
+export function _LogBoxInspectorContainer(props: Props) {
 
-  _handleDismiss = (): void => {
+  const _handleDismiss = useCallback((): void => {
     // Here we handle the cases when the log is dismissed and it
     // was either the last log, or when the current index
     // is now outside the bounds of the log array.
-    const { selectedLogIndex, logs } = this.props;
+    const { selectedLogIndex, logs } = props;
     const logsArray = Array.from(logs);
     if (selectedLogIndex != null) {
       if (logsArray.length - 1 <= 0) {
@@ -47,15 +37,28 @@ export class _LogBoxInspectorContainer extends Component<Props> {
 
       LogBoxData.dismiss(logsArray[selectedLogIndex]);
     }
-  };
+  }, []);
 
-  _handleMinimize = (): void => {
+  const _handleMinimize = useCallback((): void => {
     LogBoxData.setSelectedLog(-1);
-  };
+  }, []);
 
-  _handleSetSelectedLog = (index: number): void => {
+  const _handleSetSelectedLog = useCallback((index: number): void => {
     LogBoxData.setSelectedLog(index);
-  };
+  }, []);
+
+  return (
+    <View style={StyleSheet.absoluteFill}>
+      <LogBoxInspector
+        onDismiss={_handleDismiss}
+        onMinimize={_handleMinimize}
+        onChangeSelectedIndex={_handleSetSelectedLog}
+        logs={props.logs}
+        selectedIndex={props.selectedLogIndex}
+      />
+    </View>
+  );
+
 }
 
 export default (LogBoxData.withSubscription(

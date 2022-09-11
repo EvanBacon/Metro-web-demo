@@ -1,4 +1,5 @@
 /**
+ * Copyright (c) Evan Bacon.
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
@@ -8,13 +9,13 @@
  * @emails oncall+react_native
  */
 
-import {Text} from 'react-native';
-import * as React from 'react';
+import { Text } from "react-native";
+import * as React from "react";
 
 export const DoesNotUseKey = () => {
   return (
     <>
-      {['foo', 'bar'].map(item => (
+      {["foo", "bar"].map((item) => (
         <Text>{item}</Text>
       ))}
     </>
@@ -24,7 +25,7 @@ export const DoesNotUseKey = () => {
 export const FragmentWithProp = () => {
   return (
     <React.Fragment invalid="prop">
-      {['foo', 'bar'].map(item => (
+      {["foo", "bar"].map((item) => (
         <Text key={item}>{item}</Text>
       ))}
     </React.Fragment>

@@ -1,4 +1,5 @@
 /**
+ * Copyright (c) Evan Bacon.
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
@@ -8,38 +9,38 @@
  * @emails oncall+react_native
  */
 
-const LogBoxData = require('../Data/LogBoxData');
-const TestRenderer = require('react-test-renderer');
+const LogBoxData = require("../Data/LogBoxData");
+const TestRenderer = require("react-test-renderer");
 
-import * as React from 'react';
+import * as React from "react";
 
 import {
   DoesNotUseKey,
   FragmentWithProp,
-} from './__fixtures__/ReactWarningFixtures';
+} from "./__fixtures__/ReactWarningFixtures";
 
 const installLogBox = () => {
-  const LogBox = require('../LogBox');
+  const LogBox = require("../LogBox");
 
   LogBox.install();
 };
 
 const uninstallLogBox = () => {
-  const LogBox = require('../LogBox');
+  const LogBox = require("../LogBox");
   LogBox.uninstall();
 };
 
 const BEFORE_SLASH_RE = /(?:\/[a-zA-Z]+\/)(.+?)(?:\/.+)\//;
 
-const cleanPath = message => {
-  return message.replace(BEFORE_SLASH_RE, '/path/to/');
+const cleanPath = (message) => {
+  return message.replace(BEFORE_SLASH_RE, "/path/to/");
 };
 
-const cleanLog = logs => {
-  return logs.map(log => {
+const cleanLog = (logs) => {
+  return logs.map((log) => {
     return {
       ...log,
-      componentStack: log.componentStack.map(stack => ({
+      componentStack: log.componentStack.map((stack) => ({
         ...stack,
         fileName: cleanPath(stack.fileName),
       })),
@@ -50,8 +51,8 @@ const cleanLog = logs => {
 // TODO(T71117418): Re-enable skipped LogBox integration tests once React component
 // stack frames are the same internally and in open source.
 // eslint-disable-next-line jest/no-disabled-tests
-describe.skip('LogBox', () => {
-  const {error, warn} = console;
+describe.skip("LogBox", () => {
+  const { error, warn } = console;
   const mockError = jest.fn();
   const mockWarn = jest.fn();
 
@@ -72,13 +73,13 @@ describe.skip('LogBox', () => {
     (console: any).warn = warn;
   });
 
-  it('integrates with React and handles a key error in LogBox', () => {
-    const spy = jest.spyOn(LogBoxData, 'addLog');
+  it("integrates with React and handles a key error in LogBox", () => {
+    const spy = jest.spyOn(LogBoxData, "addLog");
     installLogBox();
 
     // Spy console.error after LogBox is installed
     // so we can assert on what React logs.
-    jest.spyOn(console, 'error');
+    jest.spyOn(console, "error");
 
     const output = TestRenderer.create(<DoesNotUseKey />);
 
@@ -90,22 +91,22 @@ describe.skip('LogBox', () => {
     expect(output).toBeDefined();
     expect(mockWarn).not.toBeCalled();
     expect(console.error.mock.calls[0].map(cleanPath)).toMatchSnapshot(
-      'Log sent from React',
+      "Log sent from React"
     );
-    expect(cleanLog(spy.mock.calls[0])).toMatchSnapshot('Log added to LogBox');
+    expect(cleanLog(spy.mock.calls[0])).toMatchSnapshot("Log added to LogBox");
     expect(mockError.mock.calls[0].map(cleanPath)).toMatchSnapshot(
-      'Log passed to console error',
+      "Log passed to console error"
     );
-    expect(mockError.mock.calls[0][0].startsWith('Warning: ')).toBe(true);
+    expect(mockError.mock.calls[0][0].startsWith("Warning: ")).toBe(true);
   });
 
-  it('integrates with React and handles a fragment warning in LogBox', () => {
-    const spy = jest.spyOn(LogBoxData, 'addLog');
+  it("integrates with React and handles a fragment warning in LogBox", () => {
+    const spy = jest.spyOn(LogBoxData, "addLog");
     installLogBox();
 
     // Spy console.error after LogBox is installed
     // so we can assert on what React logs.
-    jest.spyOn(console, 'error');
+    jest.spyOn(console, "error");
 
     const output = TestRenderer.create(<FragmentWithProp />);
 
@@ -118,12 +119,12 @@ describe.skip('LogBox', () => {
     expect(output).toBeDefined();
     expect(mockWarn).not.toBeCalled();
     expect(console.error.mock.calls[0].map(cleanPath)).toMatchSnapshot(
-      'Log sent from React',
+      "Log sent from React"
     );
-    expect(cleanLog(spy.mock.calls[0])).toMatchSnapshot('Log added to LogBox');
+    expect(cleanLog(spy.mock.calls[0])).toMatchSnapshot("Log added to LogBox");
     expect(mockError.mock.calls[0].map(cleanPath)).toMatchSnapshot(
-      'Log passed to console error',
+      "Log passed to console error"
     );
-    expect(mockError.mock.calls[0][0].startsWith('Warning: ')).toBe(true);
+    expect(mockError.mock.calls[0][0].startsWith("Warning: ")).toBe(true);
   });
 });

@@ -1,4 +1,5 @@
 /**
+ * Copyright (c) Evan Bacon.
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
@@ -387,7 +388,7 @@ type State = {
   selectedLogIndex: number,
 }
 
-type SubscribedComponent = React.Component<
+type SubscribedComponent = React.FC<
   {
     logs: Array<LogBoxLog>,
     isDisabled: boolean,

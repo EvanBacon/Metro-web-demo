@@ -1,4 +1,5 @@
 /**
+ * Copyright (c) Evan Bacon.
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
@@ -9,33 +10,33 @@
  * @flow
  */
 
-'use strict';
+"use strict";
 
-import type {StackFrame} from '../../../Core/NativeExceptionsManager';
-import type {SymbolicatedStackTrace} from '../../../Core/Devtools/symbolicateStackTrace';
+import type { StackFrame } from "../../../Core/NativeExceptionsManager";
+import type { SymbolicatedStackTrace } from "../../../Core/Devtools/symbolicateStackTrace";
 
-jest.mock('../LogBoxSymbolication', () => {
-  return {__esModule: true, symbolicate: jest.fn(), deleteStack: jest.fn()};
+jest.mock("../LogBoxSymbolication", () => {
+  return { __esModule: true, symbolicate: jest.fn(), deleteStack: jest.fn() };
 });
 
 function getLogBoxLog() {
-  return new (require('../LogBoxLog').default)({
-    level: 'warn',
+  return new (require("../LogBoxLog").default)({
+    level: "warn",
     isComponentError: false,
-    message: {content: '...', substitutions: []},
-    stack: createStack(['A', 'B', 'C']),
-    category: 'Message category...',
+    message: { content: "...", substitutions: [] },
+    stack: createStack(["A", "B", "C"]),
+    category: "Message category...",
     componentStack: [
       {
-        content: 'LogBoxLog',
-        fileName: 'LogBoxLog.js',
-        location: {column: -1, row: 1},
+        content: "LogBoxLog",
+        fileName: "LogBoxLog.js",
+        location: { column: -1, row: 1 },
       },
     ],
     codeFrame: {
-      fileName: '/path/to/RKJSModules/Apps/CrashReact/CrashReactApp.js',
-      location: {row: 199, column: 0},
-      content: '<code frame>',
+      fileName: "/path/to/RKJSModules/Apps/CrashReact/CrashReactApp.js",
+      location: { row: 199, column: 0 },
+      content: "<code frame>",
     },
   });
 }
@@ -43,52 +44,52 @@ function getLogBoxLog() {
 function getLogBoxSymbolication(): {|
   symbolicate: JestMockFn<
     $ReadOnlyArray<Array<StackFrame>>,
-    Promise<SymbolicatedStackTrace>,
+    Promise<SymbolicatedStackTrace>
   >,
 |} {
-  return (require('../LogBoxSymbolication'): any);
+  return (require("../LogBoxSymbolication"): any);
 }
 
-const createStack = methodNames =>
-  methodNames.map(methodName => ({
+const createStack = (methodNames) =>
+  methodNames.map((methodName) => ({
     column: null,
-    file: 'file://path/to/file.js',
+    file: "file://path/to/file.js",
     lineNumber: 1,
     methodName,
   }));
 
-describe('LogBoxLog', () => {
+describe("LogBoxLog", () => {
   beforeEach(() => {
     jest.resetModules();
 
-    getLogBoxSymbolication().symbolicate.mockImplementation(async stack => ({
-      stack: createStack(stack.map(frame => `S(${frame.methodName})`)),
+    getLogBoxSymbolication().symbolicate.mockImplementation(async (stack) => ({
+      stack: createStack(stack.map((frame) => `S(${frame.methodName})`)),
       codeFrame: null,
     }));
   });
 
-  it('creates a LogBoxLog object', () => {
+  it("creates a LogBoxLog object", () => {
     const log = getLogBoxLog();
 
-    expect(log.level).toEqual('warn');
-    expect(log.message).toEqual({content: '...', substitutions: []});
-    expect(log.stack).toEqual(createStack(['A', 'B', 'C']));
-    expect(log.category).toEqual('Message category...');
+    expect(log.level).toEqual("warn");
+    expect(log.message).toEqual({ content: "...", substitutions: [] });
+    expect(log.stack).toEqual(createStack(["A", "B", "C"]));
+    expect(log.category).toEqual("Message category...");
     expect(log.componentStack).toEqual([
       {
-        content: 'LogBoxLog',
-        fileName: 'LogBoxLog.js',
-        location: {column: -1, row: 1},
+        content: "LogBoxLog",
+        fileName: "LogBoxLog.js",
+        location: { column: -1, row: 1 },
       },
     ]);
     expect(log.codeFrame).toEqual({
-      fileName: '/path/to/RKJSModules/Apps/CrashReact/CrashReactApp.js',
-      location: {row: 199, column: 0},
-      content: '<code frame>',
+      fileName: "/path/to/RKJSModules/Apps/CrashReact/CrashReactApp.js",
+      location: { row: 199, column: 0 },
+      content: "<code frame>",
     });
   });
 
-  it('increments LogBoxLog count', () => {
+  it("increments LogBoxLog count", () => {
     const log = getLogBoxLog();
 
     expect(log.count).toEqual(1);
@@ -98,29 +99,29 @@ describe('LogBoxLog', () => {
     expect(log.count).toEqual(2);
   });
 
-  it('starts without a symbolicated stack', () => {
+  it("starts without a symbolicated stack", () => {
     const log = getLogBoxLog();
 
     expect(log.symbolicated).toEqual({
       error: null,
       stack: null,
-      status: 'NONE',
+      status: "NONE",
     });
   });
 
-  it('updates when symbolication is in progress', () => {
+  it("updates when symbolication is in progress", () => {
     const log = getLogBoxLog();
 
     const callback = jest.fn();
     log.symbolicate(callback);
 
     expect(callback).toBeCalledTimes(1);
-    expect(callback).toBeCalledWith('PENDING');
+    expect(callback).toBeCalledWith("PENDING");
     expect(getLogBoxSymbolication().symbolicate).toBeCalledTimes(1);
     expect(log.symbolicated).toEqual({
       error: null,
       stack: null,
-      status: 'PENDING',
+      status: "PENDING",
     });
 
     // Symbolicating while pending should not make more requests.
@@ -132,23 +133,23 @@ describe('LogBoxLog', () => {
     expect(getLogBoxSymbolication().symbolicate).not.toBeCalled();
   });
 
-  it('updates when symbolication finishes', () => {
+  it("updates when symbolication finishes", () => {
     const log = getLogBoxLog();
 
     const callback = jest.fn();
     log.symbolicate(callback);
     expect(callback).toBeCalledTimes(1);
-    expect(callback).toBeCalledWith('PENDING');
+    expect(callback).toBeCalledWith("PENDING");
     expect(getLogBoxSymbolication().symbolicate).toBeCalled();
 
     jest.runAllTicks();
 
     expect(callback).toBeCalledTimes(2);
-    expect(callback).toBeCalledWith('COMPLETE');
+    expect(callback).toBeCalledWith("COMPLETE");
     expect(log.symbolicated).toEqual({
       error: null,
-      stack: createStack(['S(A)', 'S(B)', 'S(C)']),
-      status: 'COMPLETE',
+      stack: createStack(["S(A)", "S(B)", "S(C)"]),
+      status: "COMPLETE",
     });
 
     // Do not symbolicate again.
@@ -162,9 +163,9 @@ describe('LogBoxLog', () => {
     expect(getLogBoxSymbolication().symbolicate).not.toBeCalled();
   });
 
-  it('updates when symbolication fails', () => {
-    const error = new Error('...');
-    getLogBoxSymbolication().symbolicate.mockImplementation(async stack => {
+  it("updates when symbolication fails", () => {
+    const error = new Error("...");
+    getLogBoxSymbolication().symbolicate.mockImplementation(async (stack) => {
       throw error;
     });
 
@@ -173,17 +174,17 @@ describe('LogBoxLog', () => {
     const callback = jest.fn();
     log.symbolicate(callback);
     expect(callback).toBeCalledTimes(1);
-    expect(callback).toBeCalledWith('PENDING');
+    expect(callback).toBeCalledWith("PENDING");
     expect(getLogBoxSymbolication().symbolicate).toBeCalled();
 
     jest.runAllTicks();
 
     expect(callback).toBeCalledTimes(2);
-    expect(callback).toBeCalledWith('FAILED');
+    expect(callback).toBeCalledWith("FAILED");
     expect(log.symbolicated).toEqual({
       error,
       stack: null,
-      status: 'FAILED',
+      status: "FAILED",
     });
 
     // Do not symbolicate again, retry if needed.
@@ -197,19 +198,19 @@ describe('LogBoxLog', () => {
     expect(getLogBoxSymbolication().symbolicate).not.toBeCalled();
   });
 
-  it('retry updates when symbolication is in progress', () => {
+  it("retry updates when symbolication is in progress", () => {
     const log = getLogBoxLog();
 
     const callback = jest.fn();
     log.retrySymbolicate(callback);
 
     expect(callback).toBeCalledTimes(1);
-    expect(callback).toBeCalledWith('PENDING');
+    expect(callback).toBeCalledWith("PENDING");
     expect(getLogBoxSymbolication().symbolicate).toBeCalledTimes(1);
     expect(log.symbolicated).toEqual({
       error: null,
       stack: null,
-      status: 'PENDING',
+      status: "PENDING",
     });
 
     // Symbolicating while pending should not make more requests.
@@ -221,23 +222,23 @@ describe('LogBoxLog', () => {
     expect(getLogBoxSymbolication().symbolicate).not.toBeCalled();
   });
 
-  it('retry updates when symbolication finishes', () => {
+  it("retry updates when symbolication finishes", () => {
     const log = getLogBoxLog();
 
     const callback = jest.fn();
     log.retrySymbolicate(callback);
     expect(callback).toBeCalledTimes(1);
-    expect(callback).toBeCalledWith('PENDING');
+    expect(callback).toBeCalledWith("PENDING");
     expect(getLogBoxSymbolication().symbolicate).toBeCalled();
 
     jest.runAllTicks();
 
     expect(callback).toBeCalledTimes(2);
-    expect(callback).toBeCalledWith('COMPLETE');
+    expect(callback).toBeCalledWith("COMPLETE");
     expect(log.symbolicated).toEqual({
       error: null,
-      stack: createStack(['S(A)', 'S(B)', 'S(C)']),
-      status: 'COMPLETE',
+      stack: createStack(["S(A)", "S(B)", "S(C)"]),
+      status: "COMPLETE",
     });
 
     // Do not symbolicate again
@@ -251,9 +252,9 @@ describe('LogBoxLog', () => {
     expect(getLogBoxSymbolication().symbolicate).not.toBeCalled();
   });
 
-  it('retry updates when symbolication fails', () => {
-    const error = new Error('...');
-    getLogBoxSymbolication().symbolicate.mockImplementation(async stack => {
+  it("retry updates when symbolication fails", () => {
+    const error = new Error("...");
+    getLogBoxSymbolication().symbolicate.mockImplementation(async (stack) => {
       throw error;
     });
 
@@ -262,41 +263,41 @@ describe('LogBoxLog', () => {
     const callback = jest.fn();
     log.retrySymbolicate(callback);
     expect(callback).toBeCalledTimes(1);
-    expect(callback).toBeCalledWith('PENDING');
+    expect(callback).toBeCalledWith("PENDING");
     expect(getLogBoxSymbolication().symbolicate).toBeCalled();
 
     jest.runAllTicks();
 
     expect(callback).toBeCalledTimes(2);
-    expect(callback).toBeCalledWith('FAILED');
+    expect(callback).toBeCalledWith("FAILED");
     expect(log.symbolicated).toEqual({
       error,
       stack: null,
-      status: 'FAILED',
+      status: "FAILED",
     });
 
     // Retry to symbolicate again.
     callback.mockClear();
     getLogBoxSymbolication().symbolicate.mockClear();
-    getLogBoxSymbolication().symbolicate.mockImplementation(async stack => ({
-      stack: createStack(stack.map(frame => `S(${frame.methodName})`)),
+    getLogBoxSymbolication().symbolicate.mockImplementation(async (stack) => ({
+      stack: createStack(stack.map((frame) => `S(${frame.methodName})`)),
       codeFrame: null,
     }));
 
     log.retrySymbolicate(callback);
 
     expect(callback).toBeCalledTimes(1);
-    expect(callback).toBeCalledWith('PENDING');
+    expect(callback).toBeCalledWith("PENDING");
     expect(getLogBoxSymbolication().symbolicate).toBeCalled();
 
     jest.runAllTicks();
 
     expect(callback).toBeCalledTimes(2);
-    expect(callback).toBeCalledWith('COMPLETE');
+    expect(callback).toBeCalledWith("COMPLETE");
     expect(log.symbolicated).toEqual({
       error: null,
-      stack: createStack(['S(A)', 'S(B)', 'S(C)']),
-      status: 'COMPLETE',
+      stack: createStack(["S(A)", "S(B)", "S(C)"]),
+      status: "COMPLETE",
     });
   });
 });

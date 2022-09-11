@@ -1,10 +1,12 @@
 /**
+ * Copyright (c) Evan Bacon.
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
+import { useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 import * as LogBoxData from './Data/LogBoxData';
 import { LogBoxLog } from './Data/LogBoxLog';
@@ -19,16 +21,16 @@ type Props = {
 export function _LogBoxNotificationContainer(props: Props) {
   const { logs } = props;
 
-  const onDismissWarns = () => {
+  const onDismissWarns = useCallback(() => {
     LogBoxData.clearWarnings();
-  };
-  const onDismissErrors = () => {
+  }, []);
+  const onDismissErrors = useCallback(() => {
     LogBoxData.clearErrors();
-  };
+  }, []);
 
-  const setSelectedLog = (index: number): void => {
+  const setSelectedLog = useCallback((index: number): void => {
     LogBoxData.setSelectedLog(index);
-  };
+  }, []);
 
   function openLog(log: LogBoxLog) {
     let index = logs.length - 1;

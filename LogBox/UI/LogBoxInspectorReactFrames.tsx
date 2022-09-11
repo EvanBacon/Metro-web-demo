@@ -1,10 +1,11 @@
 /**
+ * Copyright (c) Evan Bacon.
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import * as React from 'react';
+import { useState } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 
 import openFileInEditor from '../../modules/openFileInEditor';
@@ -14,6 +15,7 @@ import * as LogBoxStyle from './LogBoxStyle';
 
 
 import type { LogBoxLog } from '../Data/LogBoxLog';
+import { CODE_FONT } from './constants';
 
 type Props = {
   log: LogBoxLog,
@@ -44,7 +46,7 @@ function getPrettyFileName(path: string) {
   return fileName;
 }
 export function LogBoxInspectorReactFrames(props: Props) {
-  const [collapsed, setCollapsed] = React.useState(true);
+  const [collapsed, setCollapsed] = useState(true);
   if (props.log.componentStack == null || props.log.componentStack.length < 1) {
     return null;
   }
@@ -153,14 +155,14 @@ const componentStyles = StyleSheet.create({
     paddingRight: 10,
   },
   frameName: {
-    fontFamily: Platform.select({ default: 'Courier', ios: 'Courier New', android: 'monospace' }),
+    fontFamily: CODE_FONT,
     color: LogBoxStyle.getTextColor(1),
     fontSize: 14,
     includeFontPadding: false,
     lineHeight: 18,
   },
   bracket: {
-    fontFamily: Platform.select({ default: 'Courier', ios: 'Courier New', android: 'monospace' }),
+    fontFamily: CODE_FONT,
     color: LogBoxStyle.getTextColor(0.4),
     fontSize: 14,
     fontWeight: '500',

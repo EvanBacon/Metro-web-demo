@@ -1,14 +1,16 @@
 /**
+ * Copyright (c) Evan Bacon.
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import openFileInEditor from '../../modules/openFileInEditor';
 import * as LogBoxData from '../Data/LogBoxData';
 import { Ansi } from './AnsiHighlight';
+import { CODE_FONT } from './constants';
 import { LogBoxButton } from './LogBoxButton';
 import { LogBoxInspectorSection } from './LogBoxInspectorSection';
 import * as LogBoxStyle from './LogBoxStyle';
@@ -133,7 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     includeFontPadding: false,
     lineHeight: 20,
-    fontFamily: Platform.select({ default: 'Courier', ios: 'Courier New', android: 'monospace' }),
+    fontFamily: CODE_FONT,
   },
   fileText: {
     color: LogBoxStyle.getTextColor(0.5),
@@ -142,7 +144,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     includeFontPadding: false,
     lineHeight: 16,
-    fontFamily: Platform.select({ default: 'Courier', ios: 'Courier New', android: 'monospace' }),
+    fontFamily: CODE_FONT,
   },
 });
+
 

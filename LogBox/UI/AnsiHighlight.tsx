@@ -1,15 +1,13 @@
 /**
+ * Copyright (c) Evan Bacon.
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-
 import Anser from 'anser';
-import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
 
-import type { TextStyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet';
 
 // Afterglow theme from https://iterm2colorschemes.com/
 const COLORS = {
@@ -37,7 +35,7 @@ export function Ansi({
   style,
 }: {
   text: string,
-  style: TextStyleProp,
+  style: StyleProp<TextStyle>,
 
 } & any) {
   let commonWhitespaceLength = Infinity;
