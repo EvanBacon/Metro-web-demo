@@ -9,44 +9,44 @@
  * @flow strict-local
  */
 
-'use strict';
+"use strict";
 
-const React = require('react');
-const LogBoxInspectorCodeFrame = require('../LogBoxInspectorCodeFrame').default;
-const render = require('../../../../jest/renderer');
+import React from "react";
+import { LogBoxInspectorCodeFrame } from "../LogBoxInspectorCodeFrame";
+const render = require("../../../../jest/renderer");
 
-describe('LogBoxInspectorCodeFrame', () => {
-  it('should render null for no code frame', () => {
+describe("LogBoxInspectorCodeFrame", () => {
+  it("should render null for no code frame", () => {
     const output = render.shallowRender(
-      <LogBoxInspectorCodeFrame codeFrame={null} />,
+      <LogBoxInspectorCodeFrame codeFrame={null} />
     );
 
     expect(output).toMatchSnapshot();
   });
 
-  it('should render a code frame', () => {
+  it("should render a code frame", () => {
     const output = render.shallowRender(
       <LogBoxInspectorCodeFrame
         codeFrame={{
-          fileName: '/path/to/RKJSModules/Apps/CrashReact/CrashReactApp.js',
-          location: {row: 199, column: 0},
+          fileName: "/path/to/RKJSModules/Apps/CrashReact/CrashReactApp.js",
+          location: { row: 199, column: 0 },
           content: `  197 | });
     198 |
   > 199 | export default CrashReactApp;
         | ^
     200 |`,
         }}
-      />,
+      />
     );
 
     expect(output).toMatchSnapshot();
   });
 
-  it('should render a code frame without a location', () => {
+  it("should render a code frame without a location", () => {
     const output = render.shallowRender(
       <LogBoxInspectorCodeFrame
         codeFrame={{
-          fileName: '/path/to/RKJSModules/Apps/CrashReact/CrashReactApp.js',
+          fileName: "/path/to/RKJSModules/Apps/CrashReact/CrashReactApp.js",
           location: null,
           content: `  197 | });
     198 |
@@ -54,7 +54,7 @@ describe('LogBoxInspectorCodeFrame', () => {
         | ^
     200 |`,
         }}
-      />,
+      />
     );
 
     expect(output).toMatchSnapshot();

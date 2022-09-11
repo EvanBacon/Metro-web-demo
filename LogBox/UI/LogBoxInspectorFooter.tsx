@@ -4,16 +4,14 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-
-import type { LogLevel } from '../Data/LogBoxLog';
-
-import * as React from 'react';
-import { StatusBar, StyleSheet, Platform, View, Text, Animated, Easing, Image } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native';
 
 import DeviceInfo from '../../modules/DeviceInfo';
-
-import LogBoxButton from './LogBoxButton';
+import { LogBoxButton } from './LogBoxButton';
 import * as LogBoxStyle from './LogBoxStyle';
+
+
+import type { LogLevel } from '../Data/LogBoxLog';
 
 type Props = {
   onDismiss: () => void,
@@ -21,7 +19,7 @@ type Props = {
   level?: LogLevel,
 }
 
-function LogBoxInspectorFooter(props: Props) {
+export function LogBoxInspectorFooter(props: Props) {
   if (props.level === 'syntax') {
     return (
       <View style={styles.root}>
@@ -106,4 +104,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LogBoxInspectorFooter;

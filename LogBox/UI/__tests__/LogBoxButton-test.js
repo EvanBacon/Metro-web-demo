@@ -9,37 +9,39 @@
  * @flow strict-local
  */
 
-const React = require('react');
-const LogBoxButton = require('../LogBoxButton').default;
-const render = require('../../../../jest/renderer');
-import Text from '../../../Text/Text';
+import React from "react";
+import { LogBoxButton } from "../LogBoxButton";
+const render = require("../../../../jest/renderer");
+import Text from "../../../Text/Text";
 
-describe('LogBoxButton', () => {
-  it('should render only a view without an onPress', () => {
+describe("LogBoxButton", () => {
+  it("should render only a view without an onPress", () => {
     const output = render.shallowRender(
       <LogBoxButton
         backgroundColor={{
-          default: 'black',
-          pressed: 'red',
-        }}>
+          default: "black",
+          pressed: "red",
+        }}
+      >
         <Text>Press me</Text>
-      </LogBoxButton>,
+      </LogBoxButton>
     );
 
     expect(output).toMatchSnapshot();
   });
 
-  it('should render TouchableWithoutFeedback and pass through props', () => {
+  it("should render TouchableWithoutFeedback and pass through props", () => {
     const output = render.shallowRender(
       <LogBoxButton
         backgroundColor={{
-          default: 'black',
-          pressed: 'red',
+          default: "black",
+          pressed: "red",
         }}
         hitSlop={{}}
-        onPress={() => {}}>
+        onPress={() => {}}
+      >
         <Text>Press me</Text>
-      </LogBoxButton>,
+      </LogBoxButton>
     );
 
     expect(output).toMatchSnapshot();

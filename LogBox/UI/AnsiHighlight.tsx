@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { ansiToJson } from 'anser';
+import Anser from 'anser';
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -32,7 +32,7 @@ const COLORS = {
   'ansi-bright-white': 'rgb(247, 247, 247)',
 };
 
-export default function Ansi({
+export function Ansi({
   text,
   style,
 }: {
@@ -42,7 +42,7 @@ export default function Ansi({
 } & any) {
   let commonWhitespaceLength = Infinity;
   const parsedLines = text.split(/\n/).map(line =>
-    ansiToJson(line, {
+    Anser.ansiToJson(line, {
       json: true,
       remove_empty: true,
       use_classes: true,

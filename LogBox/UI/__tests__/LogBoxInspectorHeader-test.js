@@ -9,60 +9,60 @@
  * @flow strict-local
  */
 
-'use strict';
+"use strict";
 
-const React = require('react');
-const LogBoxInspectorHeader = require('../LogBoxInspectorHeader').default;
-const render = require('../../../../jest/renderer');
+import React from "react";
+import { LogBoxInspectorHeader } from "../LogBoxInspectorHeader";
+const render = require("../../../../jest/renderer");
 
-describe('LogBoxInspectorHeader', () => {
-  it('should render no buttons for one total', () => {
+describe("LogBoxInspectorHeader", () => {
+  it("should render no buttons for one total", () => {
     const output = render.shallowRender(
       <LogBoxInspectorHeader
         onSelectIndex={() => {}}
         selectedIndex={0}
         total={1}
         level="warn"
-      />,
+      />
     );
 
     expect(output).toMatchSnapshot();
   });
 
-  it('should render both buttons for two total', () => {
+  it("should render both buttons for two total", () => {
     const output = render.shallowRender(
       <LogBoxInspectorHeader
         onSelectIndex={() => {}}
         selectedIndex={1}
         total={2}
         level="warn"
-      />,
+      />
     );
 
     expect(output).toMatchSnapshot();
   });
 
-  it('should render two buttons for three or more total', () => {
+  it("should render two buttons for three or more total", () => {
     const output = render.shallowRender(
       <LogBoxInspectorHeader
         onSelectIndex={() => {}}
         selectedIndex={0}
         total={1}
         level="warn"
-      />,
+      />
     );
 
     expect(output).toMatchSnapshot();
   });
 
-  it('should render syntax error header', () => {
+  it("should render syntax error header", () => {
     const output = render.shallowRender(
       <LogBoxInspectorHeader
         onSelectIndex={() => {}}
         selectedIndex={0}
         total={1}
         level="syntax"
-      />,
+      />
     );
 
     expect(output).toMatchSnapshot();

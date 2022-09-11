@@ -4,10 +4,9 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import * as React from 'react';
 import { Image, Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
 
-import LogBoxButton from './LogBoxButton';
+import { LogBoxButton } from './LogBoxButton';
 import * as LogBoxStyle from './LogBoxStyle';
 
 import type { LogLevel } from '../Data/LogBoxLog';
@@ -19,7 +18,7 @@ type Props = {
   level: LogLevel,
 }
 
-function LogBoxInspectorHeader(props: Props) {
+export function LogBoxInspectorHeader(props: Props) {
   if (props.level === 'syntax') {
     return (
       <View style={[styles.safeArea, styles[props.level]]}>
@@ -159,5 +158,3 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS !== 'ios' ? StatusBar.currentHeight : 40,
   },
 });
-
-export default LogBoxInspectorHeader;

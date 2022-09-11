@@ -4,23 +4,23 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import * as React from 'react';
 import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import openFileInEditor from '../../modules/openFileInEditor';
 import * as LogBoxData from '../Data/LogBoxData';
-import AnsiHighlight from './AnsiHighlight';
-import LogBoxButton from './LogBoxButton';
-import LogBoxInspectorSection from './LogBoxInspectorSection';
+import { Ansi } from './AnsiHighlight';
+import { LogBoxButton } from './LogBoxButton';
+import { LogBoxInspectorSection } from './LogBoxInspectorSection';
 import * as LogBoxStyle from './LogBoxStyle';
 
 
 import type { CodeFrame } from '../Data/parseLogBoxLog';
+
 type Props = {
   codeFrame?: CodeFrame,
 };
 
-function LogBoxInspectorCodeFrame(props: Props) {
+export function LogBoxInspectorCodeFrame(props: Props) {
   const codeFrame = props.codeFrame;
   if (codeFrame == null) {
     return null;
@@ -50,7 +50,7 @@ function LogBoxInspectorCodeFrame(props: Props) {
       <View style={styles.box}>
         <View style={styles.frame}>
           <ScrollView horizontal>
-            <AnsiHighlight style={styles.content} text={codeFrame.content} />
+            <Ansi style={styles.content} text={codeFrame.content} />
           </ScrollView>
         </View>
         <LogBoxButton
@@ -146,4 +146,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LogBoxInspectorCodeFrame;

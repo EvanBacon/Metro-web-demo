@@ -8,10 +8,10 @@
 import type { Message as MessageType } from '../Data/parseLogBoxLog';
 import * as React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import LogBoxButton from './LogBoxButton';
+import { LogBoxButton } from './LogBoxButton';
 import * as LogBoxStyle from './LogBoxStyle';
-import LogBoxLog from '../Data/LogBoxLog';
-import LogBoxMessage from './LogBoxMessage';
+import { LogBoxLog } from '../Data/LogBoxLog';
+import { LogBoxMessage } from './LogBoxMessage';
 import * as LogBoxData from '../Data/LogBoxData';
 
 type Props = {
@@ -22,7 +22,7 @@ type Props = {
   onPressDismiss: () => void,
 }
 
-function LogBoxLogNotification(props: Props) {
+export function LogBoxLogNotification(props: Props) {
   const { totalLogCount, level, log } = props;
 
   // Eagerly symbolicate so the stack is available when pressing to inspect.
@@ -54,9 +54,6 @@ function CountBadge(
 ) {
   return (
     <View style={countStyles.outside}>
-      {/* $FlowFixMe[incompatible-type] (>=0.114.0) This suppression was added
-       * when fixing the type of `StyleSheet.create`. Remove this comment to
-       * see the error. */}
       <View style={[countStyles.inside, countStyles[props.level]]}>
         <Text style={countStyles.text}>
           {props.count <= 1 ? '!' : props.count}
@@ -213,5 +210,3 @@ const toastStyles = StyleSheet.create({
     flexBasis: 'auto',
   },
 });
-
-export default LogBoxLogNotification;

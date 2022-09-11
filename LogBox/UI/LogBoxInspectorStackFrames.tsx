@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
+import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native'
 
-import LogBoxButton from './LogBoxButton';
-import LogBoxInspectorSourceMapStatus from './LogBoxInspectorSourceMapStatus';
-import LogBoxInspectorStackFrame from './LogBoxInspectorStackFrame';
-import LogBoxInspectorSection from './LogBoxInspectorSection';
+import { LogBoxButton } from './LogBoxButton';
+import { LogBoxInspectorSourceMapStatus } from './LogBoxInspectorSourceMapStatus';
+import { LogBoxInspectorStackFrame } from './LogBoxInspectorStackFrame';
+import { LogBoxInspectorSection } from './LogBoxInspectorSection';
 import * as LogBoxStyle from './LogBoxStyle';
 import openFileInEditor from '../../modules/openFileInEditor';
 import type { Stack } from '../Data/LogBoxSymbolication';
-import type LogBoxLog from '../Data/LogBoxLog';
+import type { LogBoxLog } from '../Data/LogBoxLog';
 
 type Props = {
   log: LogBoxLog,
@@ -56,8 +56,8 @@ export function getCollapseMessage(
   }
 }
 
-function LogBoxInspectorStackFrames(props: Props) {
-  const [collapsed, setCollapsed] = React.useState(() => {
+export function LogBoxInspectorStackFrames(props: Props) {
+  const [collapsed, setCollapsed] = useState(() => {
     // Only collapse frames initially if some frames are not collapsed.
     return props.log.getAvailableStack().some(({ collapse }) => !collapse);
   });
@@ -207,4 +207,3 @@ const stackStyles = StyleSheet.create({
   },
 });
 
-export default LogBoxInspectorStackFrames;

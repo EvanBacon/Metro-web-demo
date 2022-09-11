@@ -4,10 +4,9 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import LogBoxMessage from './LogBoxMessage';
+import { LogBoxMessage } from './LogBoxMessage';
 import * as LogBoxStyle from './LogBoxStyle';
 
 
@@ -24,7 +23,7 @@ type Props = {
 
 const SHOW_MORE_MESSAGE_LENGTH = 300;
 
-function LogBoxInspectorMessageHeader(props: Props) {
+export function LogBoxInspectorMessageHeader(props: Props) {
   function renderShowMore() {
     if (
       props.message.content.length < SHOW_MORE_MESSAGE_LENGTH ||
@@ -118,4 +117,3 @@ const messageStyles = StyleSheet.create({
   },
 });
 
-export default LogBoxInspectorMessageHeader;

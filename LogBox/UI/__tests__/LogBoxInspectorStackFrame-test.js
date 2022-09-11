@@ -9,60 +9,59 @@
  * @flow strict-local
  */
 
-'use strict';
+"use strict";
 
-const React = require('react');
-const LogBoxInspectorStackFrame =
-  require('../LogBoxInspectorStackFrame').default;
-const render = require('../../../../jest/renderer');
+import React from "react";
+import { LogBoxInspectorStackFrame } from "../LogBoxInspectorStackFrame";
+const render = require("../../../../jest/renderer");
 
-describe('LogBoxInspectorStackFrame', () => {
-  it('should render stack frame', () => {
+describe("LogBoxInspectorStackFrame", () => {
+  it("should render stack frame", () => {
     const output = render.shallowRender(
       <LogBoxInspectorStackFrame
         onPress={() => {}}
         frame={{
           column: 1,
-          file: 'app.js',
+          file: "app.js",
           lineNumber: 1,
-          methodName: 'foo',
+          methodName: "foo",
           collapse: false,
         }}
-      />,
+      />
     );
 
     expect(output).toMatchSnapshot();
   });
 
-  it('should render stack frame without press feedback', () => {
+  it("should render stack frame without press feedback", () => {
     const output = render.shallowRender(
       <LogBoxInspectorStackFrame
         frame={{
           column: 1,
-          file: 'app.js',
+          file: "app.js",
           lineNumber: 1,
-          methodName: 'foo',
+          methodName: "foo",
           collapse: false,
         }}
-      />,
+      />
     );
 
     // Both button backgrounds should be transparent
     expect(output).toMatchSnapshot();
   });
 
-  it('should render collapsed stack frame with dimmed text', () => {
+  it("should render collapsed stack frame with dimmed text", () => {
     const output = render.shallowRender(
       <LogBoxInspectorStackFrame
         onPress={() => {}}
         frame={{
           column: 1,
-          file: 'app.js',
+          file: "app.js",
           lineNumber: 1,
-          methodName: 'foo',
+          methodName: "foo",
           collapse: true,
         }}
-      />,
+      />
     );
 
     expect(output).toMatchSnapshot();

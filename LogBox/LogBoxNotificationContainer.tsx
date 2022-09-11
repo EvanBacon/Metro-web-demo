@@ -5,11 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
 import * as LogBoxData from './Data/LogBoxData';
-import LogBoxLog from './Data/LogBoxLog';
-import LogBoxLogNotification from './UI/LogBoxNotification';
+import { LogBoxLog } from './Data/LogBoxLog';
+import { LogBoxLogNotification } from './UI/LogBoxNotification';
 
 type Props = {
   logs: readonly LogBoxLog[],

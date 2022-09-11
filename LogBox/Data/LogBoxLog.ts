@@ -30,7 +30,7 @@ export type LogBoxLogData = {
   isComponentError: boolean;
 };
 
-class LogBoxLog {
+export class LogBoxLog {
   message: Message;
   type: string;
   category: Category;
@@ -135,5 +135,3 @@ class LogBoxLog {
     }
   }
 }
-
-export default LogBoxLog;

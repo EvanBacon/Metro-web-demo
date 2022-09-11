@@ -9,14 +9,13 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import * as LogBoxStyle from './LogBoxStyle';
 
-
 type Props = {
   heading: string,
   children,
   action?: any,
 }
 
-function LogBoxInspectorSection(props: Props) {
+export function LogBoxInspectorSection(props: Props) {
   return (
     <View style={styles.section}>
       <View style={styles.heading}>
@@ -50,5 +49,3 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
 });
-
-export default LogBoxInspectorSection;

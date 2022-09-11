@@ -8,12 +8,12 @@ import * as React from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 
 import openFileInEditor from '../../modules/openFileInEditor';
-import LogBoxButton from './LogBoxButton';
-import LogBoxInspectorSection from './LogBoxInspectorSection';
+import { LogBoxButton } from './LogBoxButton';
+import { LogBoxInspectorSection } from './LogBoxInspectorSection';
 import * as LogBoxStyle from './LogBoxStyle';
 
 
-import type LogBoxLog from '../Data/LogBoxLog';
+import type { LogBoxLog } from '../Data/LogBoxLog';
 
 type Props = {
   log: LogBoxLog,
@@ -43,7 +43,7 @@ function getPrettyFileName(path: string) {
 
   return fileName;
 }
-function LogBoxInspectorReactFrames(props: Props) {
+export function LogBoxInspectorReactFrames(props: Props) {
   const [collapsed, setCollapsed] = React.useState(true);
   if (props.log.componentStack == null || props.log.componentStack.length < 1) {
     return null;
@@ -177,4 +177,3 @@ const componentStyles = StyleSheet.create({
   },
 });
 
-export default LogBoxInspectorReactFrames;

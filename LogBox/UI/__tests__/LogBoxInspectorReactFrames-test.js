@@ -9,54 +9,53 @@
  * @flow strict-local
  */
 
-'use strict';
+"use strict";
 
-const React = require('react');
-const LogBoxInspectorReactFrames =
-  require('../LogBoxInspectorReactFrames').default;
-const LogBoxLog = require('../../Data/LogBoxLog').default;
-const render = require('../../../../jest/renderer');
+import React from "react";
+import { LogBoxInspectorReactFrames } from "../LogBoxInspectorReactFrames";
+const LogBoxLog = require("../../Data/LogBoxLog").default;
+const render = require("../../../../jest/renderer");
 
-describe('LogBoxInspectorReactFrames', () => {
-  it('should render null for no componentStack frames', () => {
+describe("LogBoxInspectorReactFrames", () => {
+  it("should render null for no componentStack frames", () => {
     const output = render.shallowRender(
       <LogBoxInspectorReactFrames
         log={
           new LogBoxLog({
-            level: 'warn',
+            level: "warn",
             isComponentError: false,
             message: {
-              content: 'Some kind of message',
+              content: "Some kind of message",
               substitutions: [],
             },
             stack: [],
-            category: 'Some kind of message',
+            category: "Some kind of message",
             componentStack: [],
           })
         }
-      />,
+      />
     );
 
     expect(output).toMatchSnapshot();
   });
 
-  it('should render componentStack frames without full path pressable', () => {
+  it("should render componentStack frames without full path pressable", () => {
     const output = render.shallowRender(
       <LogBoxInspectorReactFrames
         log={
           new LogBoxLog({
-            level: 'warn',
+            level: "warn",
             isComponentError: false,
             message: {
-              content: 'Some kind of message',
+              content: "Some kind of message",
               substitutions: [],
             },
             stack: [],
-            category: 'Some kind of message',
+            category: "Some kind of message",
             componentStack: [
               {
-                content: 'MyComponent',
-                fileName: 'MyComponentFile.js',
+                content: "MyComponent",
+                fileName: "MyComponentFile.js",
                 location: {
                   row: 1,
                   column: -1,
@@ -65,29 +64,29 @@ describe('LogBoxInspectorReactFrames', () => {
             ],
           })
         }
-      />,
+      />
     );
 
     expect(output).toMatchSnapshot();
   });
 
-  it('should render componentStack frames with full path pressable', () => {
+  it("should render componentStack frames with full path pressable", () => {
     const output = render.shallowRender(
       <LogBoxInspectorReactFrames
         log={
           new LogBoxLog({
-            level: 'warn',
+            level: "warn",
             isComponentError: false,
             message: {
-              content: 'Some kind of message',
+              content: "Some kind of message",
               substitutions: [],
             },
             stack: [],
-            category: 'Some kind of message',
+            category: "Some kind of message",
             componentStack: [
               {
-                content: 'MyComponent',
-                fileName: '/path/to/MyComponentFile.js',
+                content: "MyComponent",
+                fileName: "/path/to/MyComponentFile.js",
                 location: {
                   row: 1,
                   column: -1,
@@ -96,29 +95,29 @@ describe('LogBoxInspectorReactFrames', () => {
             ],
           })
         }
-      />,
+      />
     );
 
     expect(output).toMatchSnapshot();
   });
 
-  it('should render componentStack frames with parent folder of index.js', () => {
+  it("should render componentStack frames with parent folder of index.js", () => {
     const output = render.shallowRender(
       <LogBoxInspectorReactFrames
         log={
           new LogBoxLog({
-            level: 'warn',
+            level: "warn",
             isComponentError: false,
             message: {
-              content: 'Some kind of message',
+              content: "Some kind of message",
               substitutions: [],
             },
             stack: [],
-            category: 'Some kind of message',
+            category: "Some kind of message",
             componentStack: [
               {
-                content: 'MyComponent',
-                fileName: '/path/to/index.js',
+                content: "MyComponent",
+                fileName: "/path/to/index.js",
                 location: {
                   row: 1,
                   column: -1,
@@ -127,53 +126,53 @@ describe('LogBoxInspectorReactFrames', () => {
             ],
           })
         }
-      />,
+      />
     );
 
     expect(output).toMatchSnapshot();
   });
 
-  it('should render componentStack frames with more than 3 stacks', () => {
+  it("should render componentStack frames with more than 3 stacks", () => {
     const output = render.shallowRender(
       <LogBoxInspectorReactFrames
         log={
           new LogBoxLog({
-            level: 'warn',
+            level: "warn",
             isComponentError: false,
             message: {
-              content: 'Some kind of message',
+              content: "Some kind of message",
               substitutions: [],
             },
             stack: [],
-            category: 'Some kind of message',
+            category: "Some kind of message",
             componentStack: [
               {
-                content: 'MyComponent',
-                fileName: '/path/to/index.js',
+                content: "MyComponent",
+                fileName: "/path/to/index.js",
                 location: {
                   row: 1,
                   column: -1,
                 },
               },
               {
-                content: 'MyComponent2',
-                fileName: '/path/to/index2.js',
+                content: "MyComponent2",
+                fileName: "/path/to/index2.js",
                 location: {
                   row: 1,
                   column: -1,
                 },
               },
               {
-                content: 'MyComponent3',
-                fileName: '/path/to/index3.js',
+                content: "MyComponent3",
+                fileName: "/path/to/index3.js",
                 location: {
                   row: 1,
                   column: -1,
                 },
               },
               {
-                content: 'MyComponent4',
-                fileName: '/path/to/index4.js',
+                content: "MyComponent4",
+                fileName: "/path/to/index4.js",
                 location: {
                   row: 1,
                   column: -1,
@@ -182,7 +181,7 @@ describe('LogBoxInspectorReactFrames', () => {
             ],
           })
         }
-      />,
+      />
     );
 
     expect(output).toMatchSnapshot();

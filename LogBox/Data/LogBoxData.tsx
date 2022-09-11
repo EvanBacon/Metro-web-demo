@@ -6,7 +6,7 @@
  */
 
 import * as React from 'react';
-import LogBoxLog from './LogBoxLog';
+import { LogBoxLog } from './LogBoxLog';
 import { parseLogBoxException } from './parseLogBoxLog';
 import type { LogLevel } from './LogBoxLog';
 import type {

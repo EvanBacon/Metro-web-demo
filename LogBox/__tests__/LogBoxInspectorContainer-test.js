@@ -9,193 +9,193 @@
  * @flow
  */
 
-'use strict';
+"use strict";
 
-const React = require('react');
+import React from "react";
 const {
   _LogBoxNotificationContainer: LogBoxNotificationContainer,
-} = require('../LogBoxNotificationContainer');
-const LogBoxLog = require('../Data/LogBoxLog').default;
-const render = require('../../../jest/renderer');
+} = require("../LogBoxNotificationContainer");
+const LogBoxLog = require("../Data/LogBoxLog").default;
+const render = require("../../../jest/renderer");
 
-describe('LogBoxNotificationContainer', () => {
-  it('should render null with no logs', () => {
+describe("LogBoxNotificationContainer", () => {
+  it("should render null with no logs", () => {
     const output = render.shallowRender(
-      <LogBoxNotificationContainer selectedLogIndex={-1} logs={[]} />,
+      <LogBoxNotificationContainer selectedLogIndex={-1} logs={[]} />
     );
 
     expect(output).toMatchSnapshot();
   });
 
-  it('should render null with no selected log and disabled', () => {
-    const output = render.shallowRender(
-      <LogBoxNotificationContainer
-        isDisabled
-        selectedLogIndex={-1}
-        logs={[
-          new LogBoxLog({
-            level: 'warn',
-            isComponentError: false,
-            message: {
-              content: 'Some kind of message',
-              substitutions: [],
-            },
-            stack: [],
-            category: 'Some kind of message',
-            componentStack: [],
-          }),
-        ]}
-      />,
-    );
-
-    expect(output).toMatchSnapshot();
-  });
-
-  it('should render the latest warning notification', () => {
-    const output = render.shallowRender(
-      <LogBoxNotificationContainer
-        selectedLogIndex={-1}
-        logs={[
-          new LogBoxLog({
-            level: 'warn',
-            isComponentError: false,
-            message: {
-              content: 'Some kind of message',
-              substitutions: [],
-            },
-            stack: [],
-            category: 'Some kind of message',
-            componentStack: [],
-          }),
-          new LogBoxLog({
-            level: 'warn',
-            isComponentError: false,
-            message: {
-              content: 'Some kind of message (latest)',
-              substitutions: [],
-            },
-            stack: [],
-            category: 'Some kind of message (latest)',
-            componentStack: [],
-          }),
-        ]}
-      />,
-    );
-
-    expect(output).toMatchSnapshot();
-  });
-
-  it('should render the latest error notification', () => {
-    const output = render.shallowRender(
-      <LogBoxNotificationContainer
-        selectedLogIndex={-1}
-        logs={[
-          new LogBoxLog({
-            level: 'error',
-            isComponentError: false,
-            message: {
-              content: 'Some kind of message',
-              substitutions: [],
-            },
-            stack: [],
-            category: 'Some kind of message',
-            componentStack: [],
-          }),
-          new LogBoxLog({
-            level: 'error',
-            isComponentError: false,
-            message: {
-              content: 'Some kind of message (latest)',
-              substitutions: [],
-            },
-            stack: [],
-            category: 'Some kind of message (latest)',
-            componentStack: [],
-          }),
-        ]}
-      />,
-    );
-
-    expect(output).toMatchSnapshot();
-  });
-
-  it('should render both an error and warning notification', () => {
-    const output = render.shallowRender(
-      <LogBoxNotificationContainer
-        selectedLogIndex={-1}
-        logs={[
-          new LogBoxLog({
-            level: 'warn',
-            isComponentError: false,
-            message: {
-              content: 'Some kind of message',
-              substitutions: [],
-            },
-            stack: [],
-            category: 'Some kind of message',
-            componentStack: [],
-          }),
-          new LogBoxLog({
-            level: 'error',
-            isComponentError: false,
-            message: {
-              content: 'Some kind of message (latest)',
-              substitutions: [],
-            },
-            stack: [],
-            category: 'Some kind of message (latest)',
-            componentStack: [],
-          }),
-        ]}
-      />,
-    );
-
-    expect(output).toMatchSnapshot();
-  });
-
-  it('should render selected fatal error even when disabled', () => {
+  it("should render null with no selected log and disabled", () => {
     const output = render.shallowRender(
       <LogBoxNotificationContainer
         isDisabled
-        selectedLogIndex={0}
+        selectedLogIndex={-1}
         logs={[
           new LogBoxLog({
-            level: 'fatal',
+            level: "warn",
             isComponentError: false,
             message: {
-              content: 'Should be selected',
+              content: "Some kind of message",
               substitutions: [],
             },
             stack: [],
-            category: 'Some kind of message',
+            category: "Some kind of message",
             componentStack: [],
           }),
         ]}
-      />,
+      />
     );
 
     expect(output).toMatchSnapshot();
   });
 
-  it('should render selected syntax error even when disabled', () => {
+  it("should render the latest warning notification", () => {
+    const output = render.shallowRender(
+      <LogBoxNotificationContainer
+        selectedLogIndex={-1}
+        logs={[
+          new LogBoxLog({
+            level: "warn",
+            isComponentError: false,
+            message: {
+              content: "Some kind of message",
+              substitutions: [],
+            },
+            stack: [],
+            category: "Some kind of message",
+            componentStack: [],
+          }),
+          new LogBoxLog({
+            level: "warn",
+            isComponentError: false,
+            message: {
+              content: "Some kind of message (latest)",
+              substitutions: [],
+            },
+            stack: [],
+            category: "Some kind of message (latest)",
+            componentStack: [],
+          }),
+        ]}
+      />
+    );
+
+    expect(output).toMatchSnapshot();
+  });
+
+  it("should render the latest error notification", () => {
+    const output = render.shallowRender(
+      <LogBoxNotificationContainer
+        selectedLogIndex={-1}
+        logs={[
+          new LogBoxLog({
+            level: "error",
+            isComponentError: false,
+            message: {
+              content: "Some kind of message",
+              substitutions: [],
+            },
+            stack: [],
+            category: "Some kind of message",
+            componentStack: [],
+          }),
+          new LogBoxLog({
+            level: "error",
+            isComponentError: false,
+            message: {
+              content: "Some kind of message (latest)",
+              substitutions: [],
+            },
+            stack: [],
+            category: "Some kind of message (latest)",
+            componentStack: [],
+          }),
+        ]}
+      />
+    );
+
+    expect(output).toMatchSnapshot();
+  });
+
+  it("should render both an error and warning notification", () => {
+    const output = render.shallowRender(
+      <LogBoxNotificationContainer
+        selectedLogIndex={-1}
+        logs={[
+          new LogBoxLog({
+            level: "warn",
+            isComponentError: false,
+            message: {
+              content: "Some kind of message",
+              substitutions: [],
+            },
+            stack: [],
+            category: "Some kind of message",
+            componentStack: [],
+          }),
+          new LogBoxLog({
+            level: "error",
+            isComponentError: false,
+            message: {
+              content: "Some kind of message (latest)",
+              substitutions: [],
+            },
+            stack: [],
+            category: "Some kind of message (latest)",
+            componentStack: [],
+          }),
+        ]}
+      />
+    );
+
+    expect(output).toMatchSnapshot();
+  });
+
+  it("should render selected fatal error even when disabled", () => {
     const output = render.shallowRender(
       <LogBoxNotificationContainer
         isDisabled
         selectedLogIndex={0}
         logs={[
           new LogBoxLog({
-            level: 'syntax',
+            level: "fatal",
             isComponentError: false,
             message: {
-              content: 'Should be selected',
+              content: "Should be selected",
               substitutions: [],
             },
             stack: [],
-            category: 'Some kind of syntax error message',
+            category: "Some kind of message",
+            componentStack: [],
+          }),
+        ]}
+      />
+    );
+
+    expect(output).toMatchSnapshot();
+  });
+
+  it("should render selected syntax error even when disabled", () => {
+    const output = render.shallowRender(
+      <LogBoxNotificationContainer
+        isDisabled
+        selectedLogIndex={0}
+        logs={[
+          new LogBoxLog({
+            level: "syntax",
+            isComponentError: false,
+            message: {
+              content: "Should be selected",
+              substitutions: [],
+            },
+            stack: [],
+            category: "Some kind of syntax error message",
             componentStack: [],
             codeFrame: {
-              fileName: '/path/to/RKJSModules/Apps/CrashReact/CrashReactApp.js',
-              location: {row: 199, column: 0},
+              fileName: "/path/to/RKJSModules/Apps/CrashReact/CrashReactApp.js",
+              location: { row: 199, column: 0 },
               content: `  197 | });
   198 |
 > 199 | export default CrashReactApp;
@@ -204,7 +204,7 @@ describe('LogBoxNotificationContainer', () => {
             },
           }),
         ]}
-      />,
+      />
     );
 
     expect(output).toMatchSnapshot();

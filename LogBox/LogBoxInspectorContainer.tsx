@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
+import { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import * as LogBoxData from './Data/LogBoxData';
-import LogBoxInspector from './UI/LogBoxInspector';
-import type LogBoxLog from './Data/LogBoxLog';
+import { LogBoxInspector } from './UI/LogBoxInspector';
+import type { LogBoxLog } from './Data/LogBoxLog';
 
 type Props = {
   logs: readonly LogBoxLog[],
@@ -17,7 +17,7 @@ type Props = {
   isDisabled?: boolean,
 };
 
-export class _LogBoxInspectorContainer extends React.Component<Props> {
+export class _LogBoxInspectorContainer extends Component<Props> {
   render() {
     return (
       <View style={StyleSheet.absoluteFill}>

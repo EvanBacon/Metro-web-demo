@@ -9,33 +9,32 @@
  * @flow strict-local
  */
 
-'use strict';
+"use strict";
 
-const React = require('react');
-const LogBoxInspectorSourceMapStatus =
-  require('../LogBoxInspectorSourceMapStatus').default;
-const render = require('../../../../jest/renderer');
+import React from "react";
+import { LogBoxInspectorSourceMapStatus } from "../LogBoxInspectorSourceMapStatus";
+const render = require("../../../../jest/renderer");
 
-describe('LogBoxInspectorSourceMapStatus', () => {
-  it('should render for failed', () => {
+describe("LogBoxInspectorSourceMapStatus", () => {
+  it("should render for failed", () => {
     const output = render.shallowRender(
-      <LogBoxInspectorSourceMapStatus onPress={() => {}} status="FAILED" />,
+      <LogBoxInspectorSourceMapStatus onPress={() => {}} status="FAILED" />
     );
 
     expect(output).toMatchSnapshot();
   });
 
-  it('should render for pending', () => {
+  it("should render for pending", () => {
     const output = render.shallowRender(
-      <LogBoxInspectorSourceMapStatus onPress={() => {}} status="PENDING" />,
+      <LogBoxInspectorSourceMapStatus onPress={() => {}} status="PENDING" />
     );
 
     expect(output).toMatchSnapshot();
   });
 
-  it('should render null for complete', () => {
+  it("should render null for complete", () => {
     const output = render.shallowRender(
-      <LogBoxInspectorSourceMapStatus onPress={() => {}} status="COMPLETE" />,
+      <LogBoxInspectorSourceMapStatus onPress={() => {}} status="COMPLETE" />
     );
 
     expect(output).toMatchSnapshot();

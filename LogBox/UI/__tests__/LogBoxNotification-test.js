@@ -9,27 +9,27 @@
  * @flow strict-local
  */
 
-'use strict';
+"use strict";
 
-const React = require('react');
-const LogBoxNotification = require('../LogBoxNotification').default;
-const LogBoxLog = require('../../Data/LogBoxLog').default;
-const render = require('../../../../jest/renderer');
+import React from "react";
+const { LogBoxNotification } = require("../LogBoxNotification");
+const LogBoxLog = require("../../Data/LogBoxLog").default;
+const render = require("../../../../jest/renderer");
 
 const log = new LogBoxLog({
-  level: 'warn',
+  level: "warn",
   isComponentError: false,
   message: {
-    content: 'Some kind of message',
+    content: "Some kind of message",
     substitutions: [],
   },
   stack: [],
-  category: 'Some kind of message',
+  category: "Some kind of message",
   componentStack: [],
 });
 
-describe('LogBoxNotification', () => {
-  it('should render log', () => {
+describe("LogBoxNotification", () => {
+  it("should render log", () => {
     const output = render.shallowRender(
       <LogBoxNotification
         log={log}
@@ -37,7 +37,7 @@ describe('LogBoxNotification', () => {
         level="warn"
         onPressOpen={() => {}}
         onPressDismiss={() => {}}
-      />,
+      />
     );
 
     expect(output).toMatchSnapshot();

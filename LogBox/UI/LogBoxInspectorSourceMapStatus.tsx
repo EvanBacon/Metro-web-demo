@@ -4,30 +4,24 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import { useState, useEffect } from 'react';
+import { Animated, Easing, GestureResponderEvent, StyleSheet, Text } from 'react-native';
 
-import { StyleSheet, Text, Animated, Easing, } from 'react-native'
-
-import * as React from 'react';
-import LogBoxButton from './LogBoxButton';
+import { LogBoxButton } from './LogBoxButton';
 import * as LogBoxStyle from './LogBoxStyle';
 
-// import type { PressEvent } from '../../Types/CoreEventTypes';
-
-// TODO: this
-type PressEvent = any;
-
 type Props = {
-  onPress?: (event: PressEvent) => void,
+  onPress?: (event: GestureResponderEvent) => void,
   status: 'COMPLETE' | 'FAILED' | 'NONE' | 'PENDING',
 }
 
-function LogBoxInspectorSourceMapStatus(props: Props) {
-  const [state, setState] = React.useState({
+export function LogBoxInspectorSourceMapStatus(props: Props) {
+  const [state, setState] = useState({
     animation: null,
     rotate: null,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (props.status === 'PENDING') {
       if (state.animation == null) {
         const animated = new Animated.Value(0);
@@ -130,5 +124,3 @@ const styles = StyleSheet.create({
     lineHeight: 16,
   },
 });
-
-export default LogBoxInspectorSourceMapStatus;

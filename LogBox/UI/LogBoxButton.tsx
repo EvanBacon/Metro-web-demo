@@ -7,18 +7,10 @@
  * @flow strict-local
  * @format
  */
+import { useState } from 'react';
+import { GestureResponderEvent, Insets, StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
 
-import * as React from 'react';
-import { StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
 import * as LogBoxStyle from './LogBoxStyle';
-
-// import type { ViewStyleProp } from '../../StyleSheet/StyleSheet';
-// import type { PressEvent } from '../../Types/CoreEventTypes';
-
-// TODO: This
-type ViewStyleProp = any;
-type PressEvent = any;
-type EdgeInsetsPropType = any;
 
 type Props = {
   backgroundColor: {
@@ -26,13 +18,13 @@ type Props = {
     pressed: string,
   },
   children?: any,
-  hitSlop?: EdgeInsetsPropType,
-  onPress?: (event: PressEvent) => void,
-  style?: ViewStyleProp,
+  hitSlop?: Insets,
+  onPress?: (event: GestureResponderEvent) => void,
+  style?: ViewStyle,
 };
 
-function LogBoxButton(props: Props) {
-  const [pressed, setPressed] = React.useState(false);
+export function LogBoxButton(props: Props) {
+  const [pressed, setPressed] = useState(false);
 
   let backgroundColor = props.backgroundColor;
   if (!backgroundColor) {
@@ -68,5 +60,3 @@ function LogBoxButton(props: Props) {
     </TouchableWithoutFeedback>
   );
 }
-
-export default LogBoxButton;

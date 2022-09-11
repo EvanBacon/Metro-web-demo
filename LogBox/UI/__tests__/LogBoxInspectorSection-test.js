@@ -9,29 +9,30 @@
  * @flow strict-local
  */
 
-const React = require('react');
-import Text from '../../../Text/Text';
-const LogBoxInspectorSection = require('../LogBoxInspectorSection').default;
-const render = require('../../../../jest/renderer');
+import React from "react";
+import Text from "../../../Text/Text";
+import { LogBoxInspectorSection } from "../LogBoxInspectorSection";
+const render = require("../../../../jest/renderer");
 
-describe('LogBoxInspectorSection', () => {
-  it('should render with only heading', () => {
+describe("LogBoxInspectorSection", () => {
+  it("should render with only heading", () => {
     const output = render.shallowRender(
       <LogBoxInspectorSection heading="Test Section">
         <Text>Child</Text>
-      </LogBoxInspectorSection>,
+      </LogBoxInspectorSection>
     );
 
     expect(output).toMatchSnapshot();
   });
 
-  it('should render with action on the right', () => {
+  it("should render with action on the right", () => {
     const output = render.shallowRender(
       <LogBoxInspectorSection
         heading="Test Section"
-        action={<Text>Right</Text>}>
+        action={<Text>Right</Text>}
+      >
         <Text>Child</Text>
-      </LogBoxInspectorSection>,
+      </LogBoxInspectorSection>
     );
 
     expect(output).toMatchSnapshot();

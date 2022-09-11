@@ -9,46 +9,46 @@
  * @flow strict-local
  */
 
-'use strict';
+"use strict";
 
-const React = require('react');
+import React from "react";
 const {
   _LogBoxInspectorContainer: LogBoxInspectorContainer,
-} = require('../LogBoxInspectorContainer');
-const LogBoxLog = require('../Data/LogBoxLog').default;
-const render = require('../../../jest/renderer');
+} = require("../LogBoxInspectorContainer");
+const LogBoxLog = require("../Data/LogBoxLog").default;
+const render = require("../../../jest/renderer");
 
-describe('LogBoxNotificationContainer', () => {
-  it('should render inspector with logs, even when disabled', () => {
+describe("LogBoxNotificationContainer", () => {
+  it("should render inspector with logs, even when disabled", () => {
     const output = render.shallowRender(
       <LogBoxInspectorContainer
         isDisabled
         selectedLogIndex={-1}
         logs={[
           new LogBoxLog({
-            level: 'warn',
+            level: "warn",
             isComponentError: false,
             message: {
-              content: 'Some kind of message',
+              content: "Some kind of message",
               substitutions: [],
             },
             stack: [],
-            category: 'Some kind of message',
+            category: "Some kind of message",
             componentStack: [],
           }),
           new LogBoxLog({
-            level: 'error',
+            level: "error",
             isComponentError: false,
             message: {
-              content: 'Some kind of message (latest)',
+              content: "Some kind of message (latest)",
               substitutions: [],
             },
             stack: [],
-            category: 'Some kind of message (latest)',
+            category: "Some kind of message (latest)",
             componentStack: [],
           }),
         ]}
-      />,
+      />
     );
 
     expect(output).toMatchSnapshot();

@@ -4,25 +4,24 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-
 import * as React from 'react';
-import { StyleSheet, Text, View, Platform } from 'react-native';
-import LogBoxButton from './LogBoxButton';
+import { GestureResponderEvent, Platform, StyleSheet, Text, View } from 'react-native';
+
+import { LogBoxButton } from './LogBoxButton';
 import * as LogBoxStyle from './LogBoxStyle';
 
-// import type { PressEvent } from '../../Types/CoreEventTypes';
+
 // import type { StackFrame } from '../../Core/NativeExceptionsManager';
 
 // TODO: This
-type PressEvent = any;
 type StackFrame = any;
 
 type Props = {
   frame: StackFrame,
-  onPress?: (event: PressEvent) => void,
+  onPress?: (event: GestureResponderEvent) => void,
 }
 
-function LogBoxInspectorStackFrame(props: Props) {
+export function LogBoxInspectorStackFrame(props: Props) {
   const { frame, onPress } = props;
   const column = frame.column != null && parseInt(frame.column, 10);
   const location =
@@ -108,5 +107,3 @@ const styles = StyleSheet.create({
     lineHeight: 16,
   },
 });
-
-export default LogBoxInspectorStackFrame;

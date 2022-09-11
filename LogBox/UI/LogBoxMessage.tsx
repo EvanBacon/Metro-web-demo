@@ -7,7 +7,6 @@
 import * as React from 'react';
 import { StyleProp, Text, TextStyle } from 'react-native';
 
-
 import type { Message } from '../Data/parseLogBoxLog';
 
 type Props = {
@@ -20,7 +19,7 @@ type Props = {
 const cleanContent = (content: string) =>
   content.replace(/^(TransformError |Warning: (Warning: )?|Error: )/g, '');
 
-function LogBoxMessage(props: Props) {
+export function LogBoxMessage(props: Props) {
   const { content, substitutions }: Message = props.message;
 
   if (props.plaintext === true) {
@@ -34,7 +33,7 @@ function LogBoxMessage(props: Props) {
   const createUnderLength = (
     key: string | '-1',
     message: string,
-    style: void | StyleProp<TextStyle>,
+    style?: StyleProp<TextStyle>,
   ) => {
     let cleanMessage = cleanContent(message);
 
@@ -82,4 +81,3 @@ function LogBoxMessage(props: Props) {
   return <>{elements}</>;
 }
 
-export default LogBoxMessage;

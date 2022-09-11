@@ -4,17 +4,17 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { Keyboard, ScrollView, StyleSheet, View } from 'react-native';
 
 import * as LogBoxData from '../Data/LogBoxData';
-import LogBoxLog, { LogLevel } from '../Data/LogBoxLog';
-import LogBoxInspectorCodeFrame from './LogBoxInspectorCodeFrame';
-import LogBoxInspectorFooter from './LogBoxInspectorFooter';
-import LogBoxInspectorHeader from './LogBoxInspectorHeader';
-import LogBoxInspectorMessageHeader from './LogBoxInspectorMessageHeader';
-import LogBoxInspectorReactFrames from './LogBoxInspectorReactFrames';
-import LogBoxInspectorStackFrames from './LogBoxInspectorStackFrames';
+import { LogBoxLog, LogLevel } from '../Data/LogBoxLog';
+import { LogBoxInspectorCodeFrame } from './LogBoxInspectorCodeFrame';
+import { LogBoxInspectorFooter } from './LogBoxInspectorFooter';
+import { LogBoxInspectorHeader } from './LogBoxInspectorHeader';
+import { LogBoxInspectorMessageHeader } from './LogBoxInspectorMessageHeader';
+import { LogBoxInspectorReactFrames } from './LogBoxInspectorReactFrames';
+import { LogBoxInspectorStackFrames } from './LogBoxInspectorStackFrames';
 import * as LogBoxStyle from './LogBoxStyle';
 
 
@@ -27,17 +27,17 @@ type Props = {
   fatalType?: LogLevel,
 }
 
-function LogBoxInspector(props: Props) {
+export function LogBoxInspector(props: Props) {
   const { logs, selectedIndex } = props;
   let log = logs[selectedIndex];
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (log) {
       LogBoxData.symbolicateLogNow(log);
     }
   }, [log]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Optimistically symbolicate the last and next logs.
     if (logs.length > 1) {
       const selected = selectedIndex;
@@ -49,7 +49,7 @@ function LogBoxInspector(props: Props) {
     }
   }, [logs, selectedIndex]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     Keyboard.dismiss();
   }, []);
 
@@ -90,9 +90,9 @@ const headerTitleMap = {
 function LogBoxInspectorBody(
   props: Partial<{ log: LogBoxLog, onRetry: () => void }>,
 ) {
-  const [collapsed, setCollapsed] = React.useState(true);
+  const [collapsed, setCollapsed] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setCollapsed(true);
   }, [props.log]);
 
@@ -145,4 +145,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LogBoxInspector;
