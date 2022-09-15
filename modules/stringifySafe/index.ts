@@ -6,8 +6,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import invariant from "invariant";
-
 /**
  * Tries to stringify with JSON.stringify and toString, but catches exceptions
  * (e.g. from circular objects) and always returns a string and never throws.
@@ -54,7 +52,9 @@ export function createStringifySafeWithLimits(limits: {
       }
     } else {
       // Add refinement after Array.isArray call.
-      invariant(typeof value === "object", "This was already found earlier");
+      if (typeof value !== "object") {
+        throw new Error("This was already found earlier");
+      }
       let keys = Object.keys(value);
       if (stack.length >= maxDepth) {
         retval = `{ ... object with ${keys.length} keys ... }`;

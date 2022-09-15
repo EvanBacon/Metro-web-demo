@@ -13,7 +13,7 @@ import { ExtendedExceptionData } from "./Data/parseLogBoxLog";
 
 export { LogData, ExtendedExceptionData, IgnorePattern };
 
-let LogBox;
+let LogBox: ILogBox;
 
 interface ILogBox {
   install(): void;

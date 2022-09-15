@@ -7,7 +7,6 @@
  */
 import { StyleSheet, Text, View } from 'react-native';
 
-import DeviceInfo from '../../modules/DeviceInfo';
 import { LogBoxButton } from './LogBoxButton';
 import * as LogBoxStyle from './LogBoxStyle';
 
@@ -65,7 +64,7 @@ function FooterButton(props: ButtonProps) {
 const buttonStyles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    paddingBottom: DeviceInfo.getConstants().isIPhoneX_deprecated ? 30 : 0,
+    // paddingBottom: DeviceInfo.getConstants().isIPhoneX_deprecated ? 30 : 0,
   },
   content: {
     alignItems: 'center',
