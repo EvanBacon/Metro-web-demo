@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import { useState } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import openFileInEditor from '../../modules/openFileInEditor';
 import { LogBoxButton } from './LogBoxButton';

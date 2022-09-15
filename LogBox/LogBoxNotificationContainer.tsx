@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     left: 10,
     right: 10,
     position: 'absolute',
+    maxWidth: 320,
   },
   toast: {
     borderRadius: 8,

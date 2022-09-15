@@ -42,17 +42,9 @@ function preprocessException(data: ExceptionData): ExceptionData {
   }
   return data;
 }
+import parseErrorStack from "../parseErrorStack";
 
-/**
- * Handles the developer-visible aspect of errors and exceptions
- */
-let exceptionID = 0;
-function reportException(
-  e: ExtendedError,
-  isFatal: boolean,
-  reportToConsole: boolean // only true when coming from handleException; the error has not yet been logged
-) {
-  const parseErrorStack = require("../parseErrorStack").default;
+function parseException(e: ExtendedError, isFatal: boolean) {
   const stack = parseErrorStack(e?.stack);
   const currentExceptionID = ++exceptionID;
   const originalMessage = e.message || "";
@@ -84,6 +76,23 @@ function reportException(
     },
   });
 
+  return {
+    ...data,
+    isComponentError: !!e.isComponentError,
+  };
+}
+
+/**
+ * Handles the developer-visible aspect of errors and exceptions
+ */
+let exceptionID = 0;
+function reportException(
+  e: ExtendedError,
+  isFatal: boolean,
+  reportToConsole: boolean // only true when coming from handleException; the error has not yet been logged
+) {
+  const data = parseException(e, isFatal);
+
   if (reportToConsole) {
     // we feed back into console.error, to make sure any methods that are
     // monkey patched on top of console.error are called when coming from
@@ -93,10 +102,7 @@ function reportException(
 
   if (__DEV__) {
     const LogBox = require("../../LogBox/LogBox");
-    LogBox.addException({
-      ...data,
-      isComponentError: !!e.isComponentError,
-    });
+    LogBox.addException(data);
   } else if (isFatal || e.type !== "warn") {
     // const NativeExceptionsManager =
     //   require("./NativeExceptionsManager").default;
@@ -229,6 +235,7 @@ function installConsoleErrorReporter() {
 }
 
 module.exports = {
+  parseException,
   handleException,
   installConsoleErrorReporter,
   SyntheticError,

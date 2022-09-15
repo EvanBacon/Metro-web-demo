@@ -8,7 +8,7 @@
 
 import symbolicateStackTrace from '../../modules/symbolicateStackTrace';
 
-type StackFrame = any;
+import { StackFrame } from "stacktrace-parser";
 type SymbolicatedStackTrace = any;
 
 export type Stack = Array<StackFrame>;

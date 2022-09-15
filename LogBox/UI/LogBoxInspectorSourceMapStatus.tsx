@@ -29,7 +29,6 @@ export function LogBoxInspectorSourceMapStatus(props: Props) {
         const animation = Animated.loop(
           Animated.timing(animated, {
             duration: 2000,
-            // $FlowFixMe[method-unbinding]
             easing: Easing.linear,
             toValue: 1,
             useNativeDriver: true,
@@ -39,9 +38,6 @@ export function LogBoxInspectorSourceMapStatus(props: Props) {
           animation,
           rotate: animated.interpolate({
             inputRange: [0, 1],
-            /* $FlowFixMe[speculation-ambiguous] (>=0.38.0) - Flow error
-             * detected during the deployment of v0.38.0. To see the error,
-             * remove this comment and run flow */
             outputRange: ['0deg', '360deg'],
           }),
         });

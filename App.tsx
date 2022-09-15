@@ -1,15 +1,64 @@
 import { A, Footer, H1, H3, Main } from '@expo/html-elements';
 import { StatusBar } from 'expo-status-bar';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { StyleSheet, Platform, View } from 'react-native';
+import { LogBoxLog } from './LogBox/Data/LogBoxLog';
 // import { useHover } from 'react-native-web-hooks';
 
 // >
 
+
+// import { parseLogBoxException } from 'react-native/Libraries/LogBox/Data/parseLogBoxLog';
+// import { LogBoxLog } from 'react-native/Libraries/LogBox/Data/LogBoxLog';
+// import { parseLogBoxException } from './LogBox/Data/parseLogBoxLog';
+// import { parseException } from './modules/ExceptionsManager/index';
+
+// function symbolicateAsync(error) {
+//   return new Promise((resolve, reject) => {
+
+//     const metroError = new LogBoxLog(parseLogBoxException(parseException(error, false)));
+//     if (metroError) {
+//       console.log("metroError", metroError);
+//       metroError.symbolicate(() => {
+//         resolve(metroError);
+//       })
+//     } else {
+//       reject(new Error('Could not symbolicate error with Metro'));
+//     }
+//   });
+// }
+
+// function useSymbolicatedMetroError(error: Error) {
+//   // return error;
+//   const [results, setResults] = React.useState(null);
+//   const isMounted = React.useRef(true);
+
+//   React.useEffect(() => {
+//     symbolicateAsync(error).then((results) => {
+//       if (isMounted.current) {
+//         setResults(results);
+//       }
+//     }
+//     ).catch((e) => {
+//       console.error(e);
+//     }
+//     );
+//     return () => {
+//       isMounted.current = false;
+//     }
+//   }, [error]);
+
+//   return results;
+// }
+
+
 export default function App() {
   const ref = useRef(null)
+  // const err = useSymbolicatedMetroError(new Error('hey'));
+
+  // console.log('go:', err)
   // const hover = useHover(ref)
-  console.error('hey :)')
+  // console.error('hey :)')
   return (
     <View style={styles.container}>
       <Main style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

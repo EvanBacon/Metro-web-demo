@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-type StackFrame = any;
+import { StackFrame } from "stacktrace-parser";
 
 export type CodeFrame = {
   content: string;

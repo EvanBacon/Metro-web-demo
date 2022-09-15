@@ -6,21 +6,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 import { GestureResponderEvent, StyleSheet, Text, View } from 'react-native';
+import { StackFrame } from 'stacktrace-parser';
 
 import { CODE_FONT } from './constants';
 import { LogBoxButton } from './LogBoxButton';
 import * as LogBoxStyle from './LogBoxStyle';
 
-export type StackFrame = {
-  column?: number | string,
-  file?: string,
-  lineNumber?: number,
-  methodName: string,
-  collapse?: boolean,
-};
-
 type Props = {
-  frame: StackFrame,
+  frame: StackFrame & { collapse?: boolean },
   onPress?: (event: GestureResponderEvent) => void,
 }
 
