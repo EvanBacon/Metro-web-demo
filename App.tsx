@@ -56,6 +56,7 @@ export default function App() {
   const ref = useRef(null)
   // const err = useSymbolicatedMetroError(new Error('hey'));
 
+
   // throw new Error('hey');
   // console.error('hey')
   // console.log('go:', err)

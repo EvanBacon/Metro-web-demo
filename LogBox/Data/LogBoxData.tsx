@@ -428,6 +428,7 @@ export function withSubscription(
 
       return (
         <WrappedComponent
+          children={this.props.children}
           logs={Array.from(this.state.logs)}
           isDisabled={this.state.isDisabled}
           selectedLogIndex={this.state.selectedLogIndex}

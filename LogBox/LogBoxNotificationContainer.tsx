@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { useCallback } from 'react';
+import { ReactNode, useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 import * as LogBoxData from './Data/LogBoxData';
 import { LogBoxLog } from './Data/LogBoxLog';
@@ -16,6 +16,7 @@ type Props = {
   logs: readonly LogBoxLog[],
   selectedLogIndex: number,
   isDisabled?: boolean,
+  children: ReactNode
 }
 
 export function _LogBoxNotificationContainer(props: Props) {
@@ -43,7 +44,7 @@ export function _LogBoxNotificationContainer(props: Props) {
   }
 
   if (logs.length === 0 || props.isDisabled === true) {
-    return null;
+    return props.children;
   }
 
 
@@ -52,30 +53,33 @@ export function _LogBoxNotificationContainer(props: Props) {
     log => log.level === 'error' || log.level === 'fatal',
   );
   return (
-    <View style={styles.list}>
-      {warnings.length > 0 && (
-        <View style={styles.toast}>
-          <LogBoxLogNotification
-            log={warnings[warnings.length - 1]}
-            level="warn"
-            totalLogCount={warnings.length}
-            onPressOpen={() => openLog(warnings[warnings.length - 1])}
-            onPressDismiss={onDismissWarns}
-          />
-        </View>
-      )}
-      {errors.length > 0 && (
-        <View style={styles.toast}>
-          <LogBoxLogNotification
-            log={errors[errors.length - 1]}
-            level="error"
-            totalLogCount={errors.length}
-            onPressOpen={() => openLog(errors[errors.length - 1])}
-            onPressDismiss={onDismissErrors}
-          />
-        </View>
-      )}
-    </View>
+    <>
+      {props.children}
+      <View style={styles.list}>
+        {warnings.length > 0 && (
+          <View style={styles.toast}>
+            <LogBoxLogNotification
+              log={warnings[warnings.length - 1]}
+              level="warn"
+              totalLogCount={warnings.length}
+              onPressOpen={() => openLog(warnings[warnings.length - 1])}
+              onPressDismiss={onDismissWarns}
+            />
+          </View>
+        )}
+        {errors.length > 0 && (
+          <View style={styles.toast}>
+            <LogBoxLogNotification
+              log={errors[errors.length - 1]}
+              level="error"
+              totalLogCount={errors.length}
+              onPressOpen={() => openLog(errors[errors.length - 1])}
+              onPressDismiss={onDismissErrors}
+            />
+          </View>
+        )}
+      </View>
+    </>
   );
 }
 
