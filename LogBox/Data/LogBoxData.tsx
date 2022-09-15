@@ -69,17 +69,17 @@ let updateTimeout = null;
 let _isDisabled = false;
 let _selectedIndex = -1;
 
-let warningFilter: WarningFilter = function (format) {
-  return {
-    finalFormat: format,
-    forceDialogImmediately: false,
-    suppressDialog_LEGACY: true,
-    suppressCompletely: false,
-    monitorEvent: 'unknown',
-    monitorListVersion: 0,
-    monitorSampleRate: 1,
-  };
-};
+// let warningFilter: WarningFilter = function (format) {
+//   return {
+//     finalFormat: format,
+//     forceDialogImmediately: false,
+//     suppressDialog_LEGACY: true,
+//     suppressCompletely: false,
+//     monitorEvent: 'unknown',
+//     monitorListVersion: 0,
+//     monitorSampleRate: 1,
+//   };
+// };
 
 const LOGBOX_ERROR_MESSAGE =
   'An error was thrown when attempting to render log messages via LogBox.';
@@ -302,9 +302,9 @@ export function dismiss(log: LogBoxLog): void {
   }
 }
 
-export function setWarningFilter(filter: WarningFilter): void {
-  warningFilter = filter;
-}
+// export function setWarningFilter(filter: WarningFilter): void {
+//   warningFilter = filter;
+// }
 
 export function setAppInfo(info: () => AppInfo): void {
   appInfo = info;
@@ -314,9 +314,9 @@ export function getAppInfo(): AppInfo | null {
   return appInfo != null ? appInfo() : null;
 }
 
-export function checkWarningFilter(format: string): WarningInfo {
-  return warningFilter(format);
-}
+// export function checkWarningFilter(format: string): WarningInfo {
+//   return warningFilter(format);
+// }
 
 export function getIgnorePatterns(): Array<IgnorePattern> {
   return Array.from(ignorePatterns);

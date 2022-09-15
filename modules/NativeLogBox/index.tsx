@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom/client';
-import LogBoxInspector from '../../LogBox/LogBoxInspectorContainer'
 
 let currentRoot = null;
 export default {
@@ -7,6 +6,7 @@ export default {
     if (currentRoot) {
       return;
     }
+    const LogBoxInspector = require('../../LogBox/LogBoxInspectorContainer').default as typeof import('../../LogBox/LogBoxInspectorContainer').default;
     // Create a new div with ID `error-overlay` element and render LogBoxInspector into it.
     const div = document.createElement('div');
     div.id = 'error-overlay';
@@ -14,7 +14,6 @@ export default {
 
     currentRoot = ReactDOM.createRoot(div);
     currentRoot.render(<LogBoxInspector />);
-
   },
   hide() {
     // Remove div with ID `error-overlay`
