@@ -61,7 +61,7 @@ describe("LogBoxContainer", () => {
         onMinimize={() => {}}
         onChangeSelectedIndex={() => {}}
         logs={[]}
-        selectedIndex={0}
+        selectedLogIndex={0}
       />
     );
 
@@ -75,7 +75,7 @@ describe("LogBoxContainer", () => {
         onMinimize={() => {}}
         onChangeSelectedIndex={() => {}}
         logs={logs}
-        selectedIndex={0}
+        selectedLogIndex={0}
       />
     );
 
@@ -89,7 +89,7 @@ describe("LogBoxContainer", () => {
         onMinimize={() => {}}
         onChangeSelectedIndex={() => {}}
         logs={logs}
-        selectedIndex={2}
+        selectedLogIndex={2}
         fatalType="fatal"
       />
     );

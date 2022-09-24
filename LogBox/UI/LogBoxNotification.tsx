@@ -192,6 +192,11 @@ const toastStyles = StyleSheet.create({
     position: 'relative',
     width: '100%',
     justifyContent: 'center',
+    borderRadius: 8,
+    overflow: 'hidden',
+    marginBottom: 5,
+
+    // TODO: Why?
     marginTop: 0.5,
     // backgroundColor: LogBoxStyle.getTextColor(1),
   },

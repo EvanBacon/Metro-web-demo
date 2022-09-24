@@ -392,10 +392,8 @@ type State = {
   selectedLogIndex: number,
 }
 
-type SubscribedComponent = React.FC<{}>;
-
 export function withSubscription(
-  WrappedComponent: SubscribedComponent,
+  WrappedComponent: React.FC<{}>,
 ): React.Component<{}> {
   class LogBoxStateSubscription extends React.Component<Props, State> {
     static getDerivedStateFromError() {
@@ -426,9 +424,8 @@ export function withSubscription(
 
       return (
         <LogContext.Provider value={{ selectedLogIndex: this.state.selectedLogIndex, isDisabled: this.state.isDisabled, logs: Array.from(this.state.logs) }}>
-          <WrappedComponent
-            children={this.props.children}
-          />
+          {this.props.children}
+          <WrappedComponent />
         </LogContext.Provider>
       );
     }

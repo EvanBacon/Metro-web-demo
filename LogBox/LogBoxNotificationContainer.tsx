@@ -5,24 +5,30 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import { useCallback, useMemo } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import { ReactNode, useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { useRejectionHandler } from './useRejectionHandler';
 import * as LogBoxData from './Data/LogBoxData';
 import { LogBoxLog } from './Data/LogBoxLog';
-import { LogBoxLogNotification } from './UI/LogBoxNotification';
 import { useLogs } from './Data/LogContext';
+import { LogBoxLogNotification } from './UI/LogBoxNotification';
+import { useRejectionHandler } from './useRejectionHandler';
 
-export function _LogBoxNotificationContainer({ children }: {
-  children: ReactNode
-}) {
-  const { logs, isDisabled } = useLogs()
-  const hasError = useRejectionHandler();
 
+export function _LogBoxNotificationContainer() {
+  useRejectionHandler();
+  const { logs, isDisabled } = useLogs();
+  if (!logs.length || isDisabled) {
+    return null
+  }
+  return (<ToastFooter logs={logs} />);
+}
+
+function ToastFooter({ logs }: { logs: LogBoxLog[] }) {
   const onDismissWarns = useCallback(() => {
     LogBoxData.clearWarnings();
   }, []);
+
   const onDismissErrors = useCallback(() => {
     LogBoxData.clearErrors();
   }, []);
@@ -41,43 +47,33 @@ export function _LogBoxNotificationContainer({ children }: {
     setSelectedLog(index);
   }
 
-  if (logs.length === 0 || isDisabled === true) {
-    return children;
-  }
+  const warnings = useMemo(() => logs.filter(log => log.level === 'warn'), [logs]);
 
-
-  const warnings = logs.filter(log => log.level === 'warn');
-  const errors = logs.filter(
+  const errors = useMemo(() => logs.filter(
     log => log.level === 'error' || log.level === 'fatal',
-  );
+  ), [logs]);
+
   return (
-    <>
-      {children}
-      <View style={styles.list}>
-        {warnings.length > 0 && (
-          <View style={styles.toast}>
-            <LogBoxLogNotification
-              log={warnings[warnings.length - 1]}
-              level="warn"
-              totalLogCount={warnings.length}
-              onPressOpen={() => openLog(warnings[warnings.length - 1])}
-              onPressDismiss={onDismissWarns}
-            />
-          </View>
-        )}
-        {errors.length > 0 && (
-          <View style={styles.toast}>
-            <LogBoxLogNotification
-              log={errors[errors.length - 1]}
-              level="error"
-              totalLogCount={errors.length}
-              onPressOpen={() => openLog(errors[errors.length - 1])}
-              onPressDismiss={onDismissErrors}
-            />
-          </View>
-        )}
-      </View>
-    </>
+    <View style={styles.list}>
+      {warnings.length > 0 && (
+        <LogBoxLogNotification
+          log={warnings[warnings.length - 1]}
+          level="warn"
+          totalLogCount={warnings.length}
+          onPressOpen={() => openLog(warnings[warnings.length - 1])}
+          onPressDismiss={onDismissWarns}
+        />
+      )}
+      {errors.length > 0 && (
+        <LogBoxLogNotification
+          log={errors[errors.length - 1]}
+          level="error"
+          totalLogCount={errors.length}
+          onPressOpen={() => openLog(errors[errors.length - 1])}
+          onPressDismiss={onDismissErrors}
+        />
+      )}
+    </View>
   );
 }
 
@@ -88,11 +84,6 @@ const styles = StyleSheet.create({
     right: 10,
     position: 'absolute',
     maxWidth: 320,
-  },
-  toast: {
-    borderRadius: 8,
-    marginBottom: 5,
-    overflow: 'hidden',
   },
 });
 

@@ -9,30 +9,49 @@ import { useCallback, useEffect, useState } from 'react';
 import { Keyboard, ScrollView, StyleSheet, View } from 'react-native';
 
 import * as LogBoxData from '../Data/LogBoxData';
-import { LogBoxLog, LogLevel, StackType } from '../Data/LogBoxLog';
+import { LogBoxLog, StackType } from '../Data/LogBoxLog';
 import { useLogs, useSelectedLog } from '../Data/LogContext';
 import { LogBoxInspectorCodeFrame } from './LogBoxInspectorCodeFrame';
 import { LogBoxInspectorFooter } from './LogBoxInspectorFooter';
 import { LogBoxInspectorHeader } from './LogBoxInspectorHeader';
 import { LogBoxInspectorMessageHeader } from './LogBoxInspectorMessageHeader';
-// import { LogBoxInspectorReactFrames } from './LogBoxInspectorReactFrames';
 import { LogBoxInspectorStackFrames } from './LogBoxInspectorStackFrames';
 import * as LogBoxStyle from './LogBoxStyle';
 
-
-type Props = {
-  onDismiss: () => void,
-  onChangeSelectedIndex: (index: number) => void,
-  onMinimize: () => void,
-  fatalType?: LogLevel,
+// import { LogBoxInspectorReactFrames } from './LogBoxInspectorReactFrames';
+export function LogBoxInspectorContainer() {
+  const { selectedLogIndex, logs } = useLogs()
+  const log = logs[selectedLogIndex];
+  if (log == null) {
+    return null;
+  }
+  return <LogBoxInspector log={log} selectedLogIndex={selectedLogIndex} logs={logs} />;
 }
+export function LogBoxInspector({ log, selectedLogIndex, logs }: { log: LogBoxLog, selectedLogIndex: number, logs: LogBoxLog[] }) {
 
-export function LogBoxInspector(props: Props) {
-  const { selectedLogIndex: selectedIndex, logs } = useLogs()
+  const onDismiss = useCallback((): void => {
+    // Here we handle the cases when the log is dismissed and it
+    // was either the last log, or when the current index
+    // is now outside the bounds of the log array.
+    const logsArray = Array.from(logs);
+    if (selectedLogIndex != null) {
+      if (logsArray.length - 1 <= 0) {
+        LogBoxData.setSelectedLog(-1);
+      } else if (selectedLogIndex >= logsArray.length - 1) {
+        LogBoxData.setSelectedLog(selectedLogIndex - 1);
+      }
 
+      LogBoxData.dismiss(logsArray[selectedLogIndex]);
+    }
+  }, [selectedLogIndex]);
 
-  const { onChangeSelectedIndex } = props;
-  let log = logs[selectedIndex];
+  const onMinimize = useCallback((): void => {
+    LogBoxData.setSelectedLog(-1);
+  }, []);
+
+  const onChangeSelectedIndex = useCallback((index: number): void => {
+    LogBoxData.setSelectedLog(index);
+  }, []);
 
   useEffect(() => {
     if (log) {
@@ -44,7 +63,7 @@ export function LogBoxInspector(props: Props) {
   useEffect(() => {
     // Optimistically symbolicate the last and next logs.
     if (logs.length > 1) {
-      const selected = selectedIndex;
+      const selected = selectedLogIndex;
       const lastIndex = logs.length - 1;
       const prevIndex = selected - 1 < 0 ? lastIndex : selected - 1;
       const nextIndex = selected + 1 > lastIndex ? 0 : selected + 1;
@@ -53,7 +72,7 @@ export function LogBoxInspector(props: Props) {
         LogBoxData.symbolicateLogLazy(type, logs[nextIndex]);
       }
     }
-  }, [logs, selectedIndex]);
+  }, [logs, selectedLogIndex]);
 
   useEffect(() => {
     Keyboard.dismiss();
@@ -63,10 +82,6 @@ export function LogBoxInspector(props: Props) {
     LogBoxData.retrySymbolicateLogNow(type, log);
   }, [log]);
 
-  if (log == null) {
-    return null;
-  }
-
   return (
     <View style={styles.root}>
       <LogBoxInspectorHeader
@@ -75,8 +90,8 @@ export function LogBoxInspector(props: Props) {
       />
       <LogBoxInspectorBody onRetry={_handleRetry} />
       <LogBoxInspectorFooter
-        onDismiss={props.onDismiss}
-        onMinimize={props.onMinimize}
+        onDismiss={onDismiss}
+        onMinimize={onMinimize}
       />
     </View>
   );
@@ -118,7 +133,7 @@ function LogBoxInspectorBody(
     <LogBoxInspectorCodeFrame codeFrame={log.codeFrame} />
     {/* <LogBoxInspectorReactFrames log={log} /> */}
     <LogBoxInspectorStackFrames type='stack' onRetry={onRetry.bind(onRetry, 'stack')} />
-    {log?.componentStack?.length && <LogBoxInspectorStackFrames type='component' onRetry={onRetry.bind(onRetry, 'component')} />}
+    {!!log?.componentStack?.length && <LogBoxInspectorStackFrames type='component' onRetry={onRetry.bind(onRetry, 'component')} />}
   </>)
 
 
@@ -142,6 +157,11 @@ function LogBoxInspectorBody(
 
 const styles = StyleSheet.create({
   root: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     flex: 1,
     backgroundColor: LogBoxStyle.getTextColor(),
   },
@@ -151,3 +171,6 @@ const styles = StyleSheet.create({
   },
 });
 
+export default (LogBoxData.withSubscription(
+  LogBoxInspectorContainer,
+));

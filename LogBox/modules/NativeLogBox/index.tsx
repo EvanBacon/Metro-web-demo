@@ -6,7 +6,7 @@ export default {
     if (currentRoot) {
       return;
     }
-    const LogBoxInspector = require('../../LogBoxInspectorContainer').default as typeof import('../../LogBoxInspectorContainer').default;
+    const LogBoxInspector = require('../../UI/LogBoxInspector').default as typeof import('../../UI/LogBoxInspector').default;
     // Create a new div with ID `error-overlay` element and render LogBoxInspector into it.
     const div = document.createElement('div');
     div.id = 'error-overlay';
