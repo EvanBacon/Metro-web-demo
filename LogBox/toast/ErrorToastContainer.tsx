@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import { useCallback, useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Platform, SafeAreaView, StyleSheet, View } from 'react-native';
 
 import * as LogBoxData from '../Data/LogBoxData';
 import { LogBoxLog } from '../Data/LogBoxLog';
@@ -21,7 +21,11 @@ export function ErrorToastContainer() {
     if (!logs.length || isDisabled) {
         return null
     }
-    return (<ErrorToastStack logs={logs} />);
+    const toast = <ErrorToastStack logs={logs} />
+    if (Platform.OS === 'web') {
+        return toast;
+    }
+    return (<SafeAreaView>{toast}</SafeAreaView>);
 }
 
 function ErrorToastStack({ logs }: { logs: LogBoxLog[] }) {
@@ -64,6 +68,7 @@ function ErrorToastStack({ logs }: { logs: LogBoxLog[] }) {
                     onPressDismiss={onDismissWarns}
                 />
             )}
+
             {errors.length > 0 && (
                 <ErrorToast
                     log={errors[errors.length - 1]}
@@ -79,7 +84,7 @@ function ErrorToastStack({ logs }: { logs: LogBoxLog[] }) {
 
 const styles = StyleSheet.create({
     list: {
-        bottom: 20,
+        bottom: 6,
         left: 10,
         right: 10,
         position: 'absolute',

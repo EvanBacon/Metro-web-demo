@@ -8,7 +8,7 @@
 
 import type { Message as MessageType } from '../Data/parseLogBoxLog';
 import { useEffect } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { LogBoxButton } from '../UI/LogBoxButton';
 import * as LogBoxStyle from '../UI/LogBoxStyle';
 import { LogBoxLog } from '../Data/LogBoxLog';
@@ -83,26 +83,28 @@ function Message({ message }: { message?: MessageType }) {
 
 function DismissButton({ onPress }: { onPress: () => void }) {
   return (
-    <View style={dismissStyles.container}>
-      <LogBoxButton
-        backgroundColor={{
-          default: LogBoxStyle.getTextColor(0.3),
-          pressed: LogBoxStyle.getTextColor(0.5),
-        }}
-        hitSlop={{
-          top: 12,
-          right: 10,
-          bottom: 12,
-          left: 10,
-        }}
-        onPress={onPress}
-        style={dismissStyles.press}>
-        <Image
-          source={require('../UI/LogBoxImages/close.png')}
-          style={dismissStyles.image}
-        />
-      </LogBoxButton>
-    </View>
+    <Pressable
+      style={{
+        marginLeft: 5,
+      }}
+      hitSlop={{
+        top: 12,
+        right: 10,
+        bottom: 12,
+        left: 10,
+      }}
+      onPress={onPress}
+    >
+      {({ hovered, pressed }) => (
+        <View style={[dismissStyles.press, hovered && { opacity: 0.8 }, pressed && { opacity: 0.5 }]}>
+          <Image
+            source={require('../UI/LogBoxImages/close.png')}
+            style={dismissStyles.image}
+          />
+        </View>
+      )}
+    </Pressable>
+
   );
 }
 
@@ -172,6 +174,7 @@ const dismissStyles = StyleSheet.create({
     marginLeft: 5,
   },
   press: {
+    backgroundColor: LogBoxStyle.getTextColor(0.3),
     height: 20,
     width: 20,
     borderRadius: 25,
@@ -182,7 +185,6 @@ const dismissStyles = StyleSheet.create({
   image: {
     height: 8,
     width: 8,
-    tintColor: LogBoxStyle.getBackgroundColor(1),
   },
 });
 
@@ -194,11 +196,7 @@ const toastStyles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 8,
     overflow: 'hidden',
-    marginBottom: 5,
-
-    // TODO: Why?
-    marginTop: 0.5,
-    // backgroundColor: LogBoxStyle.getTextColor(1),
+    marginBottom: 4,
   },
   press: {
     height: 48,
@@ -210,6 +208,7 @@ const toastStyles = StyleSheet.create({
   },
   content: {
     alignItems: 'flex-start',
+    justifyContent: 'center',
     flexDirection: 'row',
     borderRadius: 8,
     flexGrow: 0,
