@@ -66,7 +66,7 @@ export default function App() {
     <View style={styles.container}>
       <Main style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <H1 onPress={() => {
-          throw new Error('err')
+          throw new Error('A really long error has now just been thrown')
         }} style={{
           fontSize: 50,
           fontWeight: 'bold',
