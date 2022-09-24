@@ -45,7 +45,7 @@ export function ErrorToast(props: Props) {
                   ? "#323232"
                   : hovered
                     ? "#111111"
-                    : "black",
+                    : LogBoxStyle.getBackgroundColor(),
               },
             ]}
           >
@@ -185,7 +185,7 @@ const toastStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderColor: "#323232",
-    backgroundColor: "black",
+    backgroundColor: LogBoxStyle.getBackgroundColor(),
     flex: 1,
     paddingHorizontal: 12,
   },

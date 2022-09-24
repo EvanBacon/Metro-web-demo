@@ -52,18 +52,30 @@ import { LogBoxLog } from './LogBox/Data/LogBoxLog';
 // }
 
 
+function Fourth() {
+  // throw new Error('hey');
+
+  return null;
+}
+function Third() {
+  return <Fourth />
+}
+function Second() {
+  return <Third />
+}
+
 export default function App() {
   const ref = useRef(null)
   // const err = useSymbolicatedMetroError(new Error('hey'));
 
 
-  // throw new Error('hey');
   // console.error('hey')
   // console.log('go:', err)
   // const hover = useHover(ref)
   // console.error('hey :)')
   return (
     <View style={styles.container}>
+      <Second />
       <Main style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <H1 onPress={() => {
           throw new Error('A really long error has now just been thrown')
@@ -119,7 +131,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000",
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },

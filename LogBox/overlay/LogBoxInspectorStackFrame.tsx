@@ -7,6 +7,7 @@
  */
 import { GestureResponderEvent, StyleSheet, Text, View } from 'react-native';
 import { StackFrame } from 'stacktrace-parser';
+import { formatProjectFileName } from '../formatProjectFilePath';
 
 import { CODE_FONT } from '../UI/constants';
 import { LogBoxButton } from '../UI/LogBoxButton';
@@ -21,7 +22,7 @@ export function LogBoxInspectorStackFrame(props: Props) {
   const { frame, onPress } = props;
   const column = frame.column != null && parseInt(String(frame.column), 10);
   const location =
-    getFileName(frame.file) +
+    formatProjectFileName(frame.file) +
     (frame.lineNumber != null
       ? ':' +
       frame.lineNumber +
@@ -50,16 +51,6 @@ export function LogBoxInspectorStackFrame(props: Props) {
   );
 }
 
-function getFileName(file?: string) {
-  if (file == null) {
-    return '<unknown>';
-  }
-  const queryIndex = file.indexOf('?');
-  return file.substring(
-    file.lastIndexOf('/') + 1,
-    queryIndex === -1 ? file.length : queryIndex,
-  );
-}
 
 const styles = StyleSheet.create({
   frameContainer: {

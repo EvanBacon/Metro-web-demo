@@ -1,13 +1,16 @@
 diff --git a/node_modules/@expo/metro-config/build/ExpoMetroConfig.js b/node_modules/@expo/metro-config/build/ExpoMetroConfig.js
-index 5388ba1..444a22d 100644
+index 5388ba1..1323a95 100644
 --- a/node_modules/@expo/metro-config/build/ExpoMetroConfig.js
 +++ b/node_modules/@expo/metro-config/build/ExpoMetroConfig.js
-@@ -124,6 +124,8 @@ const INTERNAL_CALLSITES_REGEX = new RegExp(['/Libraries/Renderer/implementation
+@@ -124,6 +124,11 @@ const INTERNAL_CALLSITES_REGEX = new RegExp(['/Libraries/Renderer/implementation
  'node_modules/regenerator-runtime/.+\\.js$', // Remove react native setImmediate ponyfill
  'node_modules/promise/setimmediate/.+\\.js$', // Babel helpers that implement language features
  'node_modules/@babel/runtime/.+\\.js$', // Block native code invocations
 +'/LogBox/.+\\.tsx$',
 +'/LogBox/.+\\.ts$',
++'node_modules/expo/build/.+\\.js$', // Remove babel runtime additions
++'node_modules/react-native-web/.+\\.js$', // Remove babel runtime additions
++'node_modules/react-dom/.+\\.js$', // Remove babel runtime additions
  `\\[native code\\]`].join('|'));
  exports.INTERNAL_CALLSITES_REGEX = INTERNAL_CALLSITES_REGEX;
  

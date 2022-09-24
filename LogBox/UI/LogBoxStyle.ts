@@ -7,7 +7,8 @@
  */
 
 export function getBackgroundColor(opacity?: number): string {
-  return `rgba(51, 51, 51, ${opacity == null ? 1 : opacity})`;
+  return `rgba(0, 0, 0, ${opacity == null ? 1 : opacity})`;
+  // return `rgba(51, 51, 51, ${opacity == null ? 1 : opacity})`;
 }
 
 export function getBackgroundLightColor(opacity?: number): string {

@@ -17,6 +17,7 @@ import * as LogBoxStyle from '../UI/LogBoxStyle';
 
 
 import type { CodeFrame } from '../Data/parseLogBoxLog';
+import { formatProjectFileName } from '../formatProjectFilePath';
 
 type Props = {
   codeFrame?: CodeFrame,
@@ -29,12 +30,7 @@ export function LogBoxInspectorCodeFrame(props: Props) {
   }
 
   function getFileName() {
-    const matches = /[^/]*$/.exec(codeFrame.fileName);
-    if (matches && matches.length > 0) {
-      return matches[0];
-    }
-
-    return codeFrame.fileName;
+    return formatProjectFileName(codeFrame.fileName);
   }
 
   function getLocation() {
@@ -64,7 +60,7 @@ export function LogBoxInspectorCodeFrame(props: Props) {
           onPress={() => {
             openFileInEditor(codeFrame.fileName, codeFrame.location?.row ?? 0);
           }}>
-          <Text style={styles.fileText}>
+          <Text selectable={false} style={styles.fileText}>
             {getFileName()}
             {getLocation()}
           </Text>
@@ -116,6 +112,8 @@ const appInfoStyles = StyleSheet.create({
 const styles = StyleSheet.create({
   box: {
     backgroundColor: LogBoxStyle.getBackgroundColor(),
+    borderWidth: 1,
+    borderColor: "#323232",
     marginLeft: 10,
     marginRight: 10,
     marginTop: 5,
@@ -141,9 +139,8 @@ const styles = StyleSheet.create({
     color: LogBoxStyle.getTextColor(0.5),
     textAlign: 'center',
     flex: 1,
-    fontSize: 12,
+    fontSize: 16,
     includeFontPadding: false,
-    lineHeight: 16,
     fontFamily: CODE_FONT,
   },
 });

@@ -5,7 +5,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { LogBoxButton } from '../UI/LogBoxButton';
 import * as LogBoxStyle from '../UI/LogBoxStyle';
@@ -40,30 +40,42 @@ export function LogBoxInspectorFooter(props: Props) {
   );
 }
 
-type ButtonProps = {
+
+function FooterButton({ text, onPress }: {
   onPress: () => void,
   text: string,
-}
-
-function FooterButton(props: ButtonProps) {
+}) {
   return (
-    <LogBoxButton
+    <Pressable
       backgroundColor={{
         default: 'transparent',
         pressed: LogBoxStyle.getBackgroundDarkColor(),
       }}
-      onPress={props.onPress}
-      style={buttonStyles.safeArea}>
-      <View style={buttonStyles.content}>
-        <Text style={buttonStyles.label}>{props.text}</Text>
-      </View>
-    </LogBoxButton>
+      onPress={onPress}
+      style={{ flex: 1 }}>
+      {({ hovered, pressed }) => (
+        <View style={[buttonStyles.safeArea, {
+          transitionDuration: "150ms",
+          backgroundColor: pressed
+            ? "#323232"
+            : hovered
+              ? "#111111"
+              : LogBoxStyle.getBackgroundColor(),
+        },]}>
+          <View style={buttonStyles.content}>
+            <Text selectable={false} style={buttonStyles.label}>{text}</Text>
+          </View>
+        </View>
+      )}
+    </Pressable>
   );
 }
 
 const buttonStyles = StyleSheet.create({
   safeArea: {
     flex: 1,
+    borderTopWidth: 1,
+    borderColor: '#323232'
     // paddingBottom: DeviceInfo.getConstants().isIPhoneX_deprecated ? 30 : 0,
   },
   content: {

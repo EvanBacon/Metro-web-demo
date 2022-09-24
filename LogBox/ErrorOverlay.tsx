@@ -12,8 +12,8 @@ import * as LogBoxData from './Data/LogBoxData';
 import { LogBoxLog, StackType } from './Data/LogBoxLog';
 import { useLogs, useSelectedLog } from './Data/LogContext';
 import { LogBoxInspectorCodeFrame } from './overlay/LogBoxInspectorCodeFrame';
-import { LogBoxInspectorFooter } from './overlay/LogBoxInspectorFooter';
-import { LogBoxInspectorHeader } from './overlay/LogBoxInspectorHeader';
+import { LogBoxInspectorFooter as ErrorOverlayFooter } from './overlay/LogBoxInspectorFooter';
+import { LogBoxInspectorHeader as ErrorOverlayHeader } from './overlay/LogBoxInspectorHeader';
 import { LogBoxInspectorMessageHeader } from './overlay/LogBoxInspectorMessageHeader';
 import { LogBoxInspectorStackFrames } from './overlay/LogBoxInspectorStackFrames';
 import * as LogBoxStyle from './UI/LogBoxStyle';
@@ -84,12 +84,12 @@ export function LogBoxInspector({ log, selectedLogIndex, logs }: { log: LogBoxLo
 
     return (
         <View style={styles.root}>
-            <LogBoxInspectorHeader
+            <ErrorOverlayHeader
                 onSelectIndex={onChangeSelectedIndex}
                 level={log.level}
             />
-            <LogBoxInspectorBody onRetry={_handleRetry} />
-            <LogBoxInspectorFooter
+            <ErrorOverlayBody onRetry={_handleRetry} />
+            <ErrorOverlayFooter
                 onDismiss={onDismiss}
                 onMinimize={onMinimize}
             />
@@ -105,7 +105,7 @@ const headerTitleMap = {
     component: 'Render Error',
 };
 
-function LogBoxInspectorBody(
+function ErrorOverlayBody(
     { onRetry }: { onRetry: (type: StackType) => void },
 ) {
     const log = useSelectedLog();
@@ -163,10 +163,10 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
         flex: 1,
-        backgroundColor: LogBoxStyle.getTextColor(),
+
     },
     scrollBody: {
-        backgroundColor: LogBoxStyle.getBackgroundColor(0.9),
+        backgroundColor: LogBoxStyle.getBackgroundColor(1),
         flex: 1,
     },
 });
