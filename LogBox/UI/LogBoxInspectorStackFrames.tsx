@@ -17,10 +17,10 @@ import * as LogBoxStyle from './LogBoxStyle';
 import openFileInEditor from '../modules/openFileInEditor';
 import type { Stack } from '../Data/LogBoxSymbolication';
 import type { LogBoxLog, StackType } from '../Data/LogBoxLog';
+import { useSelectedLog } from '../Data/LogContext';
 
 type Props = {
   type: StackType;
-  log: LogBoxLog,
   onRetry: () => void,
 }
 
@@ -58,36 +58,38 @@ export function getCollapseMessage(
   }
 }
 
-export function LogBoxInspectorStackFrames(props: Props) {
+export function LogBoxInspectorStackFrames({ onRetry, type }: Props) {
+  const log = useSelectedLog();
+
   const [collapsed, setCollapsed] = useState(() => {
     // Only collapse frames initially if some frames are not collapsed.
-    return props.log.getAvailableStack(props.type).some(({ collapse }) => !collapse);
+    return log.getAvailableStack(type).some(({ collapse }) => !collapse);
   });
 
   function getStackList() {
     if (collapsed === true) {
-      return props.log.getAvailableStack(props.type).filter(({ collapse }) => !collapse);
+      return log.getAvailableStack(type).filter(({ collapse }) => !collapse);
     } else {
-      return props.log.getAvailableStack(props.type);
+      return log.getAvailableStack(type);
     }
   }
 
-  if (props.log.getAvailableStack(props.type).length === 0) {
+  if (log.getAvailableStack(type).length === 0) {
     return null;
   }
 
   return (
     <LogBoxInspectorSection
-      heading={props.type === 'component' ? 'Component Stack' : "Call Stack"}
+      heading={type === 'component' ? 'Component Stack' : "Call Stack"}
       action={
         <LogBoxInspectorSourceMapStatus
           onPress={
-            props.log.symbolicated[props.type].status === 'FAILED' ? props.onRetry : null
+            log.symbolicated[type].status === 'FAILED' ? onRetry : null
           }
-          status={props.log.symbolicated[props.type].status}
+          status={log.symbolicated[type].status}
         />
       }>
-      {props.log.symbolicated[props.type].status !== 'COMPLETE' && (
+      {log.symbolicated[type].status !== 'COMPLETE' && (
         <View style={stackStyles.hintBox}>
           <Text style={stackStyles.hintText}>
             This call stack is not symbolicated. Some features are unavailable
@@ -97,25 +99,25 @@ export function LogBoxInspectorStackFrames(props: Props) {
       )}
       <StackFrameList
         list={getStackList()}
-        status={props.log.symbolicated[props.type].status}
+        status={log.symbolicated[type].status}
       />
       <StackFrameFooter
         onPress={() => setCollapsed(!collapsed)}
-        message={getCollapseMessage(props.log.getAvailableStack(props.type), collapsed)}
+        message={getCollapseMessage(log.getAvailableStack(type), collapsed)}
       />
     </LogBoxInspectorSection>
   );
 }
 
-function StackFrameList(props): JSX.Element {
-  return props.list.map((frame, index) => {
+function StackFrameList({ list, status }: { list: Stack, status: "NONE" | "PENDING" | "COMPLETE" | "FAILED" }): any {
+  return list.map((frame, index) => {
     const { file, lineNumber } = frame;
     return (
       <LogBoxInspectorStackFrame
         key={index}
         frame={frame}
         onPress={
-          props.status === 'COMPLETE' && file != null && lineNumber != null
+          status === 'COMPLETE' && file != null && lineNumber != null
             ? () => openFileInEditor(file, lineNumber)
             : null
         }
@@ -125,7 +127,7 @@ function StackFrameList(props): JSX.Element {
 }
 
 function StackFrameFooter(
-  props: { message: string, onPress: () => void },
+  { message, onPress }: { message: string, onPress: () => void },
 ) {
   return (
     <View style={stackStyles.collapseContainer}>
@@ -134,9 +136,9 @@ function StackFrameFooter(
           default: 'transparent',
           pressed: LogBoxStyle.getBackgroundColor(1),
         }}
-        onPress={props.onPress}
+        onPress={onPress}
         style={stackStyles.collapseButton}>
-        <Text style={stackStyles.collapse}>{props.message}</Text>
+        <Text style={stackStyles.collapse}>{message}</Text>
       </LogBoxButton>
     </View>
   );

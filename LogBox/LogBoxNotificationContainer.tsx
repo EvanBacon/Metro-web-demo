@@ -12,16 +12,12 @@ import { useRejectionHandler } from './useRejectionHandler';
 import * as LogBoxData from './Data/LogBoxData';
 import { LogBoxLog } from './Data/LogBoxLog';
 import { LogBoxLogNotification } from './UI/LogBoxNotification';
+import { useLogs } from './Data/LogContext';
 
-type Props = {
-  logs: readonly LogBoxLog[],
-  selectedLogIndex: number,
-  isDisabled?: boolean,
+export function _LogBoxNotificationContainer({ children }: {
   children: ReactNode
-}
-
-export function _LogBoxNotificationContainer(props: Props) {
-  const { logs } = props;
+}) {
+  const { logs, isDisabled } = useLogs()
   const hasError = useRejectionHandler();
 
   const onDismissWarns = useCallback(() => {
@@ -45,8 +41,8 @@ export function _LogBoxNotificationContainer(props: Props) {
     setSelectedLog(index);
   }
 
-  if (logs.length === 0 || props.isDisabled === true) {
-    return props.children;
+  if (logs.length === 0 || isDisabled === true) {
+    return children;
   }
 
 
@@ -56,7 +52,7 @@ export function _LogBoxNotificationContainer(props: Props) {
   );
   return (
     <>
-      {props.children}
+      {children}
       <View style={styles.list}>
         {warnings.length > 0 && (
           <View style={styles.toast}>

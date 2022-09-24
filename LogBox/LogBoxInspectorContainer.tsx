@@ -11,22 +11,15 @@ import { StyleSheet, View } from 'react-native';
 import * as LogBoxData from './Data/LogBoxData';
 import { LogBoxInspector } from './UI/LogBoxInspector';
 
+import { useLogs } from './Data/LogContext';
 
-import type { LogBoxLog } from './Data/LogBoxLog';
-
-type Props = {
-  logs: readonly LogBoxLog[],
-  selectedLogIndex: number,
-  isDisabled?: boolean,
-};
-
-export function _LogBoxInspectorContainer(props: Props) {
+export function _LogBoxInspectorContainer() {
+  const { selectedLogIndex, logs } = useLogs()
 
   const _handleDismiss = useCallback((): void => {
     // Here we handle the cases when the log is dismissed and it
     // was either the last log, or when the current index
     // is now outside the bounds of the log array.
-    const { selectedLogIndex, logs } = props;
     const logsArray = Array.from(logs);
     if (selectedLogIndex != null) {
       if (logsArray.length - 1 <= 0) {
@@ -53,8 +46,6 @@ export function _LogBoxInspectorContainer(props: Props) {
         onDismiss={_handleDismiss}
         onMinimize={_handleMinimize}
         onChangeSelectedIndex={_handleSetSelectedLog}
-        logs={props.logs}
-        selectedIndex={props.selectedLogIndex}
       />
     </View>
   );

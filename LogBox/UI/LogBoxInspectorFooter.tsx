@@ -10,17 +10,17 @@ import { StyleSheet, Text, View } from 'react-native';
 import { LogBoxButton } from './LogBoxButton';
 import * as LogBoxStyle from './LogBoxStyle';
 
-
-import type { LogLevel } from '../Data/LogBoxLog';
+import { useSelectedLog } from '../Data/LogContext';
 
 type Props = {
   onDismiss: () => void,
   onMinimize: () => void,
-  level?: LogLevel,
 }
 
 export function LogBoxInspectorFooter(props: Props) {
-  if (props.level === 'syntax') {
+  const log = useSelectedLog()
+
+  if (log.level === 'syntax') {
     return (
       <View style={styles.root}>
         <View style={styles.button}>

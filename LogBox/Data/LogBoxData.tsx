@@ -19,6 +19,7 @@ import type {
 import parseErrorStack from '../modules/parseErrorStack';
 // import type { ExtendedError } from '../../Core/ExtendedError';
 import NativeLogBox from '../modules/NativeLogBox';
+import { LogContext } from './LogContext';
 export type LogBoxLogs = Set<LogBoxLog>;
 export type LogData = {
   level: LogLevel,
@@ -391,13 +392,7 @@ type State = {
   selectedLogIndex: number,
 }
 
-type SubscribedComponent = React.FC<
-  {
-    logs: Array<LogBoxLog>,
-    isDisabled: boolean,
-    selectedLogIndex: number,
-  }
->;
+type SubscribedComponent = React.FC<{}>;
 
 export function withSubscription(
   WrappedComponent: SubscribedComponent,
@@ -430,12 +425,11 @@ export function withSubscription(
       }
 
       return (
-        <WrappedComponent
-          children={this.props.children}
-          logs={Array.from(this.state.logs)}
-          isDisabled={this.state.isDisabled}
-          selectedLogIndex={this.state.selectedLogIndex}
-        />
+        <LogContext.Provider value={{ selectedLogIndex: this.state.selectedLogIndex, isDisabled: this.state.isDisabled, logs: Array.from(this.state.logs) }}>
+          <WrappedComponent
+            children={this.props.children}
+          />
+        </LogContext.Provider>
       );
     }
 
@@ -479,3 +473,5 @@ export function withSubscription(
 
   return LogBoxStateSubscription;
 }
+
+

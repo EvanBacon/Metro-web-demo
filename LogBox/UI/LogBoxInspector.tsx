@@ -10,11 +10,12 @@ import { Keyboard, ScrollView, StyleSheet, View } from 'react-native';
 
 import * as LogBoxData from '../Data/LogBoxData';
 import { LogBoxLog, LogLevel, StackType } from '../Data/LogBoxLog';
+import { useLogs, useSelectedLog } from '../Data/LogContext';
 import { LogBoxInspectorCodeFrame } from './LogBoxInspectorCodeFrame';
 import { LogBoxInspectorFooter } from './LogBoxInspectorFooter';
 import { LogBoxInspectorHeader } from './LogBoxInspectorHeader';
 import { LogBoxInspectorMessageHeader } from './LogBoxInspectorMessageHeader';
-import { LogBoxInspectorReactFrames } from './LogBoxInspectorReactFrames';
+// import { LogBoxInspectorReactFrames } from './LogBoxInspectorReactFrames';
 import { LogBoxInspectorStackFrames } from './LogBoxInspectorStackFrames';
 import * as LogBoxStyle from './LogBoxStyle';
 
@@ -23,13 +24,14 @@ type Props = {
   onDismiss: () => void,
   onChangeSelectedIndex: (index: number) => void,
   onMinimize: () => void,
-  logs: readonly LogBoxLog[],
-  selectedIndex: number,
   fatalType?: LogLevel,
 }
 
 export function LogBoxInspector(props: Props) {
-  const { logs, selectedIndex } = props;
+  const { selectedLogIndex: selectedIndex, logs } = useLogs()
+
+
+  const { onChangeSelectedIndex } = props;
   let log = logs[selectedIndex];
 
   useEffect(() => {
@@ -68,16 +70,13 @@ export function LogBoxInspector(props: Props) {
   return (
     <View style={styles.root}>
       <LogBoxInspectorHeader
-        onSelectIndex={props.onChangeSelectedIndex}
-        selectedIndex={selectedIndex}
-        total={logs.length}
+        onSelectIndex={onChangeSelectedIndex}
         level={log.level}
       />
-      <LogBoxInspectorBody log={log} onRetry={_handleRetry} />
+      <LogBoxInspectorBody onRetry={_handleRetry} />
       <LogBoxInspectorFooter
         onDismiss={props.onDismiss}
         onMinimize={props.onMinimize}
-        level={log.level}
       />
     </View>
   );
@@ -92,33 +91,34 @@ const headerTitleMap = {
 };
 
 function LogBoxInspectorBody(
-  props: Partial<{ log: LogBoxLog, onRetry: (type: StackType) => void }>,
+  { onRetry }: { onRetry: (type: StackType) => void },
 ) {
+  const log = useSelectedLog();
   const [collapsed, setCollapsed] = useState(true);
 
   useEffect(() => {
     setCollapsed(true);
-  }, [props.log]);
+  }, [log]);
 
   const headerTitle =
-    props.log.type ??
-    headerTitleMap[props.log.isComponentError ? 'component' : props.log.level];
+    log.type ??
+    headerTitleMap[log.isComponentError ? 'component' : log.level];
 
   const header = (
     <LogBoxInspectorMessageHeader
       collapsed={collapsed}
       onPress={() => setCollapsed(!collapsed)}
-      message={props.log.message}
-      level={props.log.level}
+      message={log.message}
+      level={log.level}
       title={headerTitle}
     />
   )
 
   const content = (<>
-    <LogBoxInspectorCodeFrame codeFrame={props.log.codeFrame} />
-    {/* <LogBoxInspectorReactFrames log={props.log} /> */}
-    <LogBoxInspectorStackFrames type='stack' log={props.log} onRetry={props.onRetry.bind(props.onRetry, 'stack')} />
-    {props.log?.componentStack?.length && <LogBoxInspectorStackFrames type='component' log={props.log} onRetry={props.onRetry.bind(props.onRetry, 'component')} />}
+    <LogBoxInspectorCodeFrame codeFrame={log.codeFrame} />
+    {/* <LogBoxInspectorReactFrames log={log} /> */}
+    <LogBoxInspectorStackFrames type='stack' onRetry={onRetry.bind(onRetry, 'stack')} />
+    {log?.componentStack?.length && <LogBoxInspectorStackFrames type='component' onRetry={onRetry.bind(onRetry, 'component')} />}
   </>)
 
 

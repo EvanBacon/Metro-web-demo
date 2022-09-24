@@ -11,15 +11,17 @@ import { LogBoxButton } from './LogBoxButton';
 import * as LogBoxStyle from './LogBoxStyle';
 
 import type { LogLevel } from '../Data/LogBoxLog';
+import { useLogs } from '../Data/LogContext';
 
 type Props = {
   onSelectIndex: (selectedIndex: number) => void,
-  selectedIndex: number,
-  total: number,
   level: LogLevel,
 }
 
 export function LogBoxInspectorHeader(props: Props) {
+  const { selectedLogIndex: selectedIndex, logs } = useLogs()
+  const total = logs.length;
+
   if (props.level === 'syntax') {
     return (
       <View style={[styles.safeArea, styles[props.level]]}>
@@ -33,17 +35,17 @@ export function LogBoxInspectorHeader(props: Props) {
   }
 
   const prevIndex =
-    props.selectedIndex - 1 < 0 ? props.total - 1 : props.selectedIndex - 1;
+    selectedIndex - 1 < 0 ? total - 1 : selectedIndex - 1;
   const nextIndex =
-    props.selectedIndex + 1 > props.total - 1 ? 0 : props.selectedIndex + 1;
+    selectedIndex + 1 > total - 1 ? 0 : selectedIndex + 1;
 
-  const titleText = `Log ${props.selectedIndex + 1} of ${props.total}`;
+  const titleText = `Log ${selectedIndex + 1} of ${total}`;
 
   return (
     <View style={[styles.safeArea, styles[props.level]]}>
       <View style={styles.header}>
         <LogBoxInspectorHeaderButton
-          disabled={props.total <= 1}
+          disabled={total <= 1}
           level={props.level}
           image={require('./LogBoxImages/chevron-left.png')}
           onPress={() => props.onSelectIndex(prevIndex)}
@@ -52,7 +54,7 @@ export function LogBoxInspectorHeader(props: Props) {
           <Text style={styles.titleText}>{titleText}</Text>
         </View>
         <LogBoxInspectorHeaderButton
-          disabled={props.total <= 1}
+          disabled={total <= 1}
           level={props.level}
           image={require('./LogBoxImages/chevron-right.png')}
           onPress={() => props.onSelectIndex(nextIndex)}
