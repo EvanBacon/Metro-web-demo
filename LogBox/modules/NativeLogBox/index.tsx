@@ -6,14 +6,14 @@ export default {
     if (currentRoot) {
       return;
     }
-    const LogBoxInspector = require('../../UI/LogBoxInspector').default as typeof import('../../UI/LogBoxInspector').default;
+    const ErrorOverlay = require('../../ErrorOverlay').default as typeof import('../../ErrorOverlay').default;
     // Create a new div with ID `error-overlay` element and render LogBoxInspector into it.
     const div = document.createElement('div');
     div.id = 'error-overlay';
     document.body.appendChild(div);
 
     currentRoot = ReactDOM.createRoot(div);
-    currentRoot.render(<LogBoxInspector />);
+    currentRoot.render(<ErrorOverlay />);
   },
   hide() {
     // Remove div with ID `error-overlay`

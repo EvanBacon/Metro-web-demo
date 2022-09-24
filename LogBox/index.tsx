@@ -1,9 +1,10 @@
 
 import { Platform } from 'react-native';
 
-import LogBoxNotificationContainer from './LogBoxNotificationContainer';
+import LogBoxNotificationContainer from './ErrorToast';
 
 if (!global.setImmediate) {
+    // @ts-expect-error: setImmediate is not defined
     global.setImmediate = function (fn) {
         return setTimeout(fn, 0);
     };
