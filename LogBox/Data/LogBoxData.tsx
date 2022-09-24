@@ -16,9 +16,9 @@ import type {
   ComponentStack,
   ExtendedExceptionData,
 } from './parseLogBoxLog';
-import parseErrorStack from '../../modules/parseErrorStack';
+import parseErrorStack from '../modules/parseErrorStack';
 // import type { ExtendedError } from '../../Core/ExtendedError';
-import NativeLogBox from '../../modules/NativeLogBox';
+import NativeLogBox from '../modules/NativeLogBox';
 export type LogBoxLogs = Set<LogBoxLog>;
 export type LogData = {
   level: LogLevel,
@@ -96,7 +96,7 @@ export function reportLogBoxError(
   error: ExtendedError,
   componentStack?: string,
 ): void {
-  const ExceptionsManager = require('../../modules/ExceptionsManager');
+  const ExceptionsManager = require('../modules/ExceptionsManager');
 
   error.message = `${LOGBOX_ERROR_MESSAGE}\n\n${error.message}`;
   if (componentStack != null) {

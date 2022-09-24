@@ -5,6 +5,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import parseErrorStack from "../parseErrorStack";
 
 type ExtendedError = any;
 type ExceptionData = any;
@@ -42,8 +43,6 @@ function preprocessException(data: ExceptionData): ExceptionData {
   }
   return data;
 }
-import parseErrorStack from "../parseErrorStack";
-
 function parseException(e: ExtendedError, isFatal: boolean) {
   const stack = parseErrorStack(e?.stack);
   const currentExceptionID = ++exceptionID;
@@ -101,7 +100,7 @@ function reportException(
   }
 
   if (__DEV__) {
-    const LogBox = require("../../LogBox/LogBox");
+    const LogBox = require("../../LogBox");
     LogBox.addException(data);
   } else if (isFatal || e.type !== "warn") {
     // const NativeExceptionsManager =

@@ -14,7 +14,7 @@ import { LogBoxInspectorSourceMapStatus } from './LogBoxInspectorSourceMapStatus
 import { LogBoxInspectorStackFrame } from './LogBoxInspectorStackFrame';
 import { LogBoxInspectorSection } from './LogBoxInspectorSection';
 import * as LogBoxStyle from './LogBoxStyle';
-import openFileInEditor from '../../modules/openFileInEditor';
+import openFileInEditor from '../modules/openFileInEditor';
 import type { Stack } from '../Data/LogBoxSymbolication';
 import type { LogBoxLog } from '../Data/LogBoxLog';
 

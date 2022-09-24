@@ -7,7 +7,7 @@
  */
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import openFileInEditor from '../../modules/openFileInEditor';
+import openFileInEditor from '../modules/openFileInEditor';
 import * as LogBoxData from '../Data/LogBoxData';
 import { Ansi } from './AnsiHighlight';
 import { CODE_FONT } from './constants';

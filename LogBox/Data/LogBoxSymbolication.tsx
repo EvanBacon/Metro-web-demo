@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import symbolicateStackTrace from '../../modules/symbolicateStackTrace';
+import symbolicateStackTrace from '../modules/symbolicateStackTrace';
 
 import { StackFrame } from "stacktrace-parser";
 type SymbolicatedStackTrace = any;

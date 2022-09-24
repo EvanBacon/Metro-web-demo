@@ -7,11 +7,11 @@
  */
 
 import UTFSequence from 'react-native/Libraries/UTFSequence';
-import stringifySafe from '../../modules/stringifySafe';
+import stringifySafe from '../modules/stringifySafe';
 type ExceptionData = any;
 // import type { ExceptionData } from '../../Core/NativeExceptionsManager';
 import type { LogBoxLogData } from './LogBoxLog';
-import parseErrorStack from '../../modules/parseErrorStack';
+import parseErrorStack from '../modules/parseErrorStack';
 
 const BABEL_TRANSFORM_ERROR_FORMAT =
   /^(?:TransformError )?(?:SyntaxError: |ReferenceError: )(.*): (.*) \((\d+):(\d+)\)\n\n([\s\S]+)/;
