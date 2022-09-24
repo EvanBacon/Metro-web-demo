@@ -9,13 +9,13 @@ import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import openFileInEditor from '../modules/openFileInEditor';
-import { LogBoxButton } from './LogBoxButton';
+import { LogBoxButton } from '../UI/LogBoxButton';
 import { LogBoxInspectorSection } from './LogBoxInspectorSection';
-import * as LogBoxStyle from './LogBoxStyle';
+import * as LogBoxStyle from '../UI/LogBoxStyle';
 
 
 import type { LogBoxLog } from '../Data/LogBoxLog';
-import { CODE_FONT } from './constants';
+import { CODE_FONT } from '../UI/constants';
 
 type Props = {
   log: LogBoxLog,

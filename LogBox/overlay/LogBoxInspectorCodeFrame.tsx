@@ -9,11 +9,11 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import openFileInEditor from '../modules/openFileInEditor';
 import * as LogBoxData from '../Data/LogBoxData';
-import { Ansi } from './AnsiHighlight';
-import { CODE_FONT } from './constants';
-import { LogBoxButton } from './LogBoxButton';
+import { Ansi } from '../UI/AnsiHighlight';
+import { CODE_FONT } from '../UI/constants';
+import { LogBoxButton } from '../UI/LogBoxButton';
 import { LogBoxInspectorSection } from './LogBoxInspectorSection';
-import * as LogBoxStyle from './LogBoxStyle';
+import * as LogBoxStyle from '../UI/LogBoxStyle';
 
 
 import type { CodeFrame } from '../Data/parseLogBoxLog';

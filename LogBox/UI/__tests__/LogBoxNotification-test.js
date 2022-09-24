@@ -13,7 +13,7 @@
 "use strict";
 
 import React from "react";
-const { LogBoxNotification } = require("../LogBoxNotification");
+const { LogBoxNotification } = require("../../toast/ErrorToast");
 const LogBoxLog = require("../../Data/LogBoxLog").default;
 const render = require("../../../../jest/renderer");
 

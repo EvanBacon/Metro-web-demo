@@ -7,8 +7,8 @@
  */
 import { StyleSheet, Text, View } from 'react-native';
 
-import { LogBoxButton } from './LogBoxButton';
-import * as LogBoxStyle from './LogBoxStyle';
+import { LogBoxButton } from '../UI/LogBoxButton';
+import * as LogBoxStyle from '../UI/LogBoxStyle';
 
 import { useSelectedLog } from '../Data/LogContext';
 

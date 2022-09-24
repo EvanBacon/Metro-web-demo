@@ -8,11 +8,11 @@
 import { useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import * as LogBoxData from './Data/LogBoxData';
-import { LogBoxLog } from './Data/LogBoxLog';
-import { useLogs } from './Data/LogContext';
-import { LogBoxLogNotification } from './UI/LogBoxNotification';
-import { useRejectionHandler } from './useRejectionHandler';
+import * as LogBoxData from '../Data/LogBoxData';
+import { LogBoxLog } from '../Data/LogBoxLog';
+import { useLogs } from '../Data/LogContext';
+import { ErrorToast } from './ErrorToast';
+import { useRejectionHandler } from '../useRejectionHandler';
 
 
 export function ErrorToastContainer() {
@@ -21,10 +21,10 @@ export function ErrorToastContainer() {
     if (!logs.length || isDisabled) {
         return null
     }
-    return (<ErrorToast logs={logs} />);
+    return (<ErrorToastStack logs={logs} />);
 }
 
-function ErrorToast({ logs }: { logs: LogBoxLog[] }) {
+function ErrorToastStack({ logs }: { logs: LogBoxLog[] }) {
     const onDismissWarns = useCallback(() => {
         LogBoxData.clearWarnings();
     }, []);
@@ -56,7 +56,7 @@ function ErrorToast({ logs }: { logs: LogBoxLog[] }) {
     return (
         <View style={styles.list}>
             {warnings.length > 0 && (
-                <LogBoxLogNotification
+                <ErrorToast
                     log={warnings[warnings.length - 1]}
                     level="warn"
                     totalLogCount={warnings.length}
@@ -65,7 +65,7 @@ function ErrorToast({ logs }: { logs: LogBoxLog[] }) {
                 />
             )}
             {errors.length > 0 && (
-                <LogBoxLogNotification
+                <ErrorToast
                     log={errors[errors.length - 1]}
                     level="error"
                     totalLogCount={errors.length}

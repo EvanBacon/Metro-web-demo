@@ -8,8 +8,8 @@
 import { useEffect, useState } from 'react';
 import { Animated, Easing, GestureResponderEvent, StyleSheet, Text } from 'react-native';
 
-import { LogBoxButton } from './LogBoxButton';
-import * as LogBoxStyle from './LogBoxStyle';
+import { LogBoxButton } from '../UI/LogBoxButton';
+import * as LogBoxStyle from '../UI/LogBoxStyle';
 
 type Props = {
   onPress?: (event: GestureResponderEvent) => void,
@@ -64,11 +64,11 @@ export function LogBoxInspectorSourceMapStatus(props: Props) {
   let color;
   switch (props.status) {
     case 'FAILED':
-      image = require('./LogBoxImages/alert-triangle.png');
+      image = require('../UI/LogBoxImages/alert-triangle.png');
       color = LogBoxStyle.getErrorColor(1);
       break;
     case 'PENDING':
-      image = require('./LogBoxImages/loader.png');
+      image = require('../UI/LogBoxImages/loader.png');
       color = LogBoxStyle.getWarningColor(1);
       break;
   }

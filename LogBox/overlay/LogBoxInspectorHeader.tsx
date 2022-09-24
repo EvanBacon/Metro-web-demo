@@ -7,8 +7,8 @@
  */
 import { Image, Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
 
-import { LogBoxButton } from './LogBoxButton';
-import * as LogBoxStyle from './LogBoxStyle';
+import { LogBoxButton } from '../UI/LogBoxButton';
+import * as LogBoxStyle from '../UI/LogBoxStyle';
 
 import type { LogLevel } from '../Data/LogBoxLog';
 import { useLogs } from '../Data/LogContext';
@@ -47,7 +47,7 @@ export function LogBoxInspectorHeader(props: Props) {
         <LogBoxInspectorHeaderButton
           disabled={total <= 1}
           level={props.level}
-          image={require('./LogBoxImages/chevron-left.png')}
+          image={require('../UI/LogBoxImages/chevron-left.png')}
           onPress={() => props.onSelectIndex(prevIndex)}
         />
         <View style={styles.title}>
@@ -56,7 +56,7 @@ export function LogBoxInspectorHeader(props: Props) {
         <LogBoxInspectorHeaderButton
           disabled={total <= 1}
           level={props.level}
-          image={require('./LogBoxImages/chevron-right.png')}
+          image={require('../UI/LogBoxImages/chevron-right.png')}
           onPress={() => props.onSelectIndex(nextIndex)}
         />
       </View>

@@ -7,7 +7,7 @@
  */
 import { StyleSheet, Text, View } from 'react-native';
 
-import * as LogBoxStyle from './LogBoxStyle';
+import * as LogBoxStyle from '../UI/LogBoxStyle';
 
 type Props = {
   heading: string,

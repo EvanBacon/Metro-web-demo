@@ -7,8 +7,8 @@
  */
 import { StyleSheet, Text, View } from 'react-native';
 
-import { LogBoxMessage } from './LogBoxMessage';
-import * as LogBoxStyle from './LogBoxStyle';
+import { LogBoxMessage } from '../UI/LogBoxMessage';
+import * as LogBoxStyle from '../UI/LogBoxStyle';
 
 
 import type { LogLevel } from '../Data/LogBoxLog';

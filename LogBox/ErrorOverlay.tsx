@@ -11,11 +11,11 @@ import { Keyboard, ScrollView, StyleSheet, View } from 'react-native';
 import * as LogBoxData from './Data/LogBoxData';
 import { LogBoxLog, StackType } from './Data/LogBoxLog';
 import { useLogs, useSelectedLog } from './Data/LogContext';
-import { LogBoxInspectorCodeFrame } from './UI/LogBoxInspectorCodeFrame';
-import { LogBoxInspectorFooter } from './UI/LogBoxInspectorFooter';
-import { LogBoxInspectorHeader } from './UI/LogBoxInspectorHeader';
-import { LogBoxInspectorMessageHeader } from './UI/LogBoxInspectorMessageHeader';
-import { LogBoxInspectorStackFrames } from './UI/LogBoxInspectorStackFrames';
+import { LogBoxInspectorCodeFrame } from './overlay/LogBoxInspectorCodeFrame';
+import { LogBoxInspectorFooter } from './overlay/LogBoxInspectorFooter';
+import { LogBoxInspectorHeader } from './overlay/LogBoxInspectorHeader';
+import { LogBoxInspectorMessageHeader } from './overlay/LogBoxInspectorMessageHeader';
+import { LogBoxInspectorStackFrames } from './overlay/LogBoxInspectorStackFrames';
 import * as LogBoxStyle from './UI/LogBoxStyle';
 
 // import { LogBoxInspectorReactFrames } from './LogBoxInspectorReactFrames';

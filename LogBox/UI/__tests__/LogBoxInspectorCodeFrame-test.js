@@ -13,7 +13,7 @@
 "use strict";
 
 import React from "react";
-import { LogBoxInspectorCodeFrame } from "../LogBoxInspectorCodeFrame";
+import { LogBoxInspectorCodeFrame } from "../../overlay/LogBoxInspectorCodeFrame";
 const render = require("../../../../jest/renderer");
 
 describe("LogBoxInspectorCodeFrame", () => {

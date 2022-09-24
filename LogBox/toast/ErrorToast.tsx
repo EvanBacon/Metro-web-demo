@@ -9,10 +9,10 @@
 import type { Message as MessageType } from '../Data/parseLogBoxLog';
 import { useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { LogBoxButton } from './LogBoxButton';
-import * as LogBoxStyle from './LogBoxStyle';
-import { LogBoxLog, StackType } from '../Data/LogBoxLog';
-import { LogBoxMessage } from './LogBoxMessage';
+import { LogBoxButton } from '../UI/LogBoxButton';
+import * as LogBoxStyle from '../UI/LogBoxStyle';
+import { LogBoxLog } from '../Data/LogBoxLog';
+import { LogBoxMessage } from '../UI/LogBoxMessage';
 import * as LogBoxData from '../Data/LogBoxData';
 
 type Props = {
@@ -23,7 +23,7 @@ type Props = {
   onPressDismiss: () => void,
 }
 
-export function LogBoxLogNotification(props: Props) {
+export function ErrorToast(props: Props) {
   const { totalLogCount, level, log } = props;
 
   // Eagerly symbolicate so the stack is available when pressing to inspect.
@@ -52,27 +52,27 @@ export function LogBoxLogNotification(props: Props) {
 }
 
 function CountBadge(
-  props: Partial<{ count: number, level: 'error' | 'warn' }>,
+  { count, level }: { count: number, level: 'error' | 'warn' },
 ) {
   return (
     <View style={countStyles.outside}>
-      <View style={[countStyles.inside, countStyles[props.level]]}>
+      <View style={[countStyles.inside, countStyles[level]]}>
         <Text style={countStyles.text}>
-          {props.count <= 1 ? '!' : props.count}
+          {count <= 1 ? '!' : count}
         </Text>
       </View>
     </View>
   );
 }
 
-function Message(props: { message?: MessageType }) {
+function Message({ message }: { message?: MessageType }) {
   return (
     <View style={messageStyles.container}>
       <Text numberOfLines={1} style={messageStyles.text}>
-        {props.message && (
+        {message && (
           <LogBoxMessage
             plaintext
-            message={props.message}
+            message={message}
             style={messageStyles.substitutionText}
           />
         )}
@@ -81,7 +81,7 @@ function Message(props: { message?: MessageType }) {
   );
 }
 
-function DismissButton(props: { onPress?: () => void }) {
+function DismissButton({ onPress }: { onPress: () => void }) {
   return (
     <View style={dismissStyles.container}>
       <LogBoxButton
@@ -95,10 +95,10 @@ function DismissButton(props: { onPress?: () => void }) {
           bottom: 12,
           left: 10,
         }}
-        onPress={props.onPress}
+        onPress={onPress}
         style={dismissStyles.press}>
         <Image
-          source={require('./LogBoxImages/close.png')}
+          source={require('../UI/LogBoxImages/close.png')}
           style={dismissStyles.image}
         />
       </LogBoxButton>

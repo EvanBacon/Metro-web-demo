@@ -8,9 +8,9 @@
 import { GestureResponderEvent, StyleSheet, Text, View } from 'react-native';
 import { StackFrame } from 'stacktrace-parser';
 
-import { CODE_FONT } from './constants';
-import { LogBoxButton } from './LogBoxButton';
-import * as LogBoxStyle from './LogBoxStyle';
+import { CODE_FONT } from '../UI/constants';
+import { LogBoxButton } from '../UI/LogBoxButton';
+import * as LogBoxStyle from '../UI/LogBoxStyle';
 
 type Props = {
   frame: StackFrame & { collapse?: boolean },
