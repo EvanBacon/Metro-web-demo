@@ -16,9 +16,10 @@ import { LogBoxInspectorSection } from './LogBoxInspectorSection';
 import * as LogBoxStyle from './LogBoxStyle';
 import openFileInEditor from '../modules/openFileInEditor';
 import type { Stack } from '../Data/LogBoxSymbolication';
-import type { LogBoxLog } from '../Data/LogBoxLog';
+import type { LogBoxLog, StackType } from '../Data/LogBoxLog';
 
 type Props = {
+  type: StackType;
   log: LogBoxLog,
   onRetry: () => void,
 }
@@ -60,33 +61,33 @@ export function getCollapseMessage(
 export function LogBoxInspectorStackFrames(props: Props) {
   const [collapsed, setCollapsed] = useState(() => {
     // Only collapse frames initially if some frames are not collapsed.
-    return props.log.getAvailableStack().some(({ collapse }) => !collapse);
+    return props.log.getAvailableStack(props.type).some(({ collapse }) => !collapse);
   });
 
   function getStackList() {
     if (collapsed === true) {
-      return props.log.getAvailableStack().filter(({ collapse }) => !collapse);
+      return props.log.getAvailableStack(props.type).filter(({ collapse }) => !collapse);
     } else {
-      return props.log.getAvailableStack();
+      return props.log.getAvailableStack(props.type);
     }
   }
 
-  if (props.log.getAvailableStack().length === 0) {
+  if (props.log.getAvailableStack(props.type).length === 0) {
     return null;
   }
 
   return (
     <LogBoxInspectorSection
-      heading="Call Stack"
+      heading={props.type === 'component' ? 'Component Stack' : "Call Stack"}
       action={
         <LogBoxInspectorSourceMapStatus
           onPress={
-            props.log.symbolicated.status === 'FAILED' ? props.onRetry : null
+            props.log.symbolicated[props.type].status === 'FAILED' ? props.onRetry : null
           }
-          status={props.log.symbolicated.status}
+          status={props.log.symbolicated[props.type].status}
         />
       }>
-      {props.log.symbolicated.status !== 'COMPLETE' && (
+      {props.log.symbolicated[props.type].status !== 'COMPLETE' && (
         <View style={stackStyles.hintBox}>
           <Text style={stackStyles.hintText}>
             This call stack is not symbolicated. Some features are unavailable
@@ -96,11 +97,11 @@ export function LogBoxInspectorStackFrames(props: Props) {
       )}
       <StackFrameList
         list={getStackList()}
-        status={props.log.symbolicated.status}
+        status={props.log.symbolicated[props.type].status}
       />
       <StackFrameFooter
         onPress={() => setCollapsed(!collapsed)}
-        message={getCollapseMessage(props.log.getAvailableStack(), collapsed)}
+        message={getCollapseMessage(props.log.getAvailableStack(props.type), collapsed)}
       />
     </LogBoxInspectorSection>
   );

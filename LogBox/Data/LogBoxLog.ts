@@ -31,6 +31,18 @@ export type LogBoxLogData = {
   isComponentError: boolean;
 };
 
+export type StackType = "stack" | "component";
+
+function componentStackToStack(componentStack: ComponentStack): Stack {
+  return componentStack.map((stack) => ({
+    file: stack.fileName,
+    methodName: stack.content,
+    lineNumber: stack.location.row,
+    column: stack.location.column,
+    arguments: [],
+  }));
+}
+
 export class LogBoxLog {
   message: Message;
   type: string;
@@ -41,14 +53,23 @@ export class LogBoxLog {
   level: LogLevel;
   codeFrame?: CodeFrame;
   isComponentError: boolean;
-  symbolicated:
+  symbolicated: Record<
+    StackType,
     | { error: null; stack: null; status: "NONE" }
     | { error: null; stack: null; status: "PENDING" }
     | { error: null; stack: Stack; status: "COMPLETE" }
-    | { error: Error; stack: null; status: "FAILED" } = {
-    error: null,
-    stack: null,
-    status: "NONE",
+    | { error: Error; stack: null; status: "FAILED" }
+  > = {
+    stack: {
+      error: null,
+      stack: null,
+      status: "NONE",
+    },
+    component: {
+      error: null,
+      stack: null,
+      status: "NONE",
+    },
   };
 
   constructor(data: LogBoxLogData) {
@@ -67,48 +88,78 @@ export class LogBoxLog {
     this.count += 1;
   }
 
-  getAvailableStack(): Stack {
-    return this.symbolicated.status === "COMPLETE"
-      ? this.symbolicated.stack
-      : this.stack;
+  getAvailableStack(type: StackType): Stack {
+    if (this.symbolicated[type].status === "COMPLETE") {
+      return this.symbolicated[type].stack;
+    }
+    return this.getStack(type);
   }
 
-  retrySymbolicate(callback?: (status: SymbolicationStatus) => void): void {
-    if (this.symbolicated.status !== "COMPLETE") {
-      LogBoxSymbolication.deleteStack(this.stack);
-      this.handleSymbolicate(callback);
+  retrySymbolicate(
+    type: StackType,
+    callback?: (status: SymbolicationStatus) => void
+  ): void {
+    if (this.symbolicated[type].status !== "COMPLETE") {
+      // if (type === "component") {
+      // this.componentStackCache = null;
+      // }
+      LogBoxSymbolication.deleteStack(this.getStack(type));
+      this.handleSymbolicate(type, callback);
     }
   }
 
-  symbolicate(callback?: (status: SymbolicationStatus) => void): void {
-    if (this.symbolicated.status === "NONE") {
-      this.handleSymbolicate(callback);
+  symbolicate(
+    type: StackType,
+    callback?: (status: SymbolicationStatus) => void
+  ): void {
+    if (this.symbolicated[type].status === "NONE") {
+      this.handleSymbolicate(type, callback);
     }
   }
 
-  handleSymbolicate(callback?: (status: SymbolicationStatus) => void): void {
-    if (this.symbolicated.status !== "PENDING") {
-      this.updateStatus(null, null, null, callback);
-      LogBoxSymbolication.symbolicate(this.stack).then(
+  private componentStackCache: Stack | null = null;
+
+  private getStack(type: StackType): Stack {
+    if (type === "component") {
+      if (this.componentStackCache == null) {
+        this.componentStackCache = componentStackToStack(this.componentStack);
+      }
+      return this.componentStackCache;
+    }
+    return this.stack;
+  }
+
+  private handleSymbolicate(
+    type: StackType,
+    callback?: (status: SymbolicationStatus) => void
+  ): void {
+    if (type === "component" && !this.componentStack?.length) {
+      return;
+    }
+
+    if (this.symbolicated[type].status !== "PENDING") {
+      this.updateStatus(type, null, null, null, callback);
+      LogBoxSymbolication.symbolicate(this.getStack(type)).then(
         (data) => {
-          this.updateStatus(null, data?.stack, data?.codeFrame, callback);
+          this.updateStatus(type, null, data?.stack, data?.codeFrame, callback);
         },
         (error) => {
-          this.updateStatus(error, null, null, callback);
+          this.updateStatus(type, error, null, null, callback);
         }
       );
     }
   }
 
-  updateStatus(
+  private updateStatus(
+    type: StackType,
     error?: Error,
     stack?: Stack,
     codeFrame?: CodeFrame,
     callback?: (status: SymbolicationStatus) => void
   ): void {
-    const lastStatus = this.symbolicated.status;
+    const lastStatus = this.symbolicated[type].status;
     if (error != null) {
-      this.symbolicated = {
+      this.symbolicated[type] = {
         error,
         stack: null,
         status: "FAILED",
@@ -118,21 +169,21 @@ export class LogBoxLog {
         this.codeFrame = codeFrame;
       }
 
-      this.symbolicated = {
+      this.symbolicated[type] = {
         error: null,
         stack,
         status: "COMPLETE",
       };
     } else {
-      this.symbolicated = {
+      this.symbolicated[type] = {
         error: null,
         stack: null,
         status: "PENDING",
       };
     }
 
-    if (callback && lastStatus !== this.symbolicated.status) {
-      callback(this.symbolicated.status);
+    if (callback && lastStatus !== this.symbolicated[type].status) {
+      callback(this.symbolicated[type].status);
     }
   }
 }

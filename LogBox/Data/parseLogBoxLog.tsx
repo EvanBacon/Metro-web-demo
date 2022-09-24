@@ -48,7 +48,7 @@ export type Message = {
   }>,
 }
 
-export type ComponentStack = readonly CodeFrame[]
+export type ComponentStack = CodeFrame[]
 
 const SUBSTITUTION = UTFSequence.BOM + '%s';
 
@@ -314,7 +314,7 @@ export function parseLogBoxLog(args: readonly any[]): {
 } {
   const message = args[0];
   let argsWithoutComponentStack = [];
-  let componentStack = [];
+  let componentStack: ComponentStack = [];
 
   // Extract component stack from warnings like "Some warning%s".
   if (

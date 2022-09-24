@@ -57,7 +57,7 @@ export default function App() {
   // const err = useSymbolicatedMetroError(new Error('hey'));
 
 
-  // throw new Error('hey');
+  throw new Error('hey');
   // console.error('hey')
   // console.log('go:', err)
   // const hover = useHover(ref)

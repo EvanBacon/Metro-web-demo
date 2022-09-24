@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { LogBoxButton } from './LogBoxButton';
 import * as LogBoxStyle from './LogBoxStyle';
-import { LogBoxLog } from '../Data/LogBoxLog';
+import { LogBoxLog, StackType } from '../Data/LogBoxLog';
 import { LogBoxMessage } from './LogBoxMessage';
 import * as LogBoxData from '../Data/LogBoxData';
 
@@ -28,7 +28,8 @@ export function LogBoxLogNotification(props: Props) {
 
   // Eagerly symbolicate so the stack is available when pressing to inspect.
   useEffect(() => {
-    LogBoxData.symbolicateLogLazy(log);
+    LogBoxData.symbolicateLogLazy('stack', log);
+    LogBoxData.symbolicateLogLazy('component', log);
   }, [log]);
 
   return (

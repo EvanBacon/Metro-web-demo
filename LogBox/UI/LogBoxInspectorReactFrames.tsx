@@ -50,6 +50,7 @@ export function LogBoxInspectorReactFrames(props: Props) {
   if (props.log.componentStack == null || props.log.componentStack.length < 1) {
     return null;
   }
+  console.log('componentStack', props.log.componentStack);
 
   function getStackList() {
     if (collapsed) {

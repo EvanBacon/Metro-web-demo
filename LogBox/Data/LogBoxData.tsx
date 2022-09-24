@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { LogBoxLog } from './LogBoxLog';
+import { LogBoxLog, StackType } from './LogBoxLog';
 import { parseLogBoxException } from './parseLogBoxLog';
 import type { LogLevel } from './LogBoxLog';
 import type {
@@ -131,7 +131,7 @@ function handleUpdate(): void {
   }
 }
 
-function appendNewLog(newLog) {
+function appendNewLog(newLog: LogBoxLog): void {
   // Don't want store these logs because they trigger a
   // state update when we add them to the store.
   if (isMessageIgnored(newLog.message.content)) {
@@ -170,7 +170,10 @@ function appendNewLog(newLog) {
       }
     }, OPTIMISTIC_WAIT_TIME);
 
-    newLog.symbolicate(status => {
+    // TODO: HANDLE THIS
+    newLog.symbolicate('component')
+
+    newLog.symbolicate('stack', status => {
       if (addPendingLog && status !== 'PENDING') {
         addPendingLog();
         clearTimeout(optimisticTimeout);
@@ -225,20 +228,20 @@ export function addException(error: ExtendedExceptionData): void {
   });
 }
 
-export function symbolicateLogNow(log: LogBoxLog) {
-  log.symbolicate(() => {
+export function symbolicateLogNow(type: StackType, log: LogBoxLog) {
+  log.symbolicate(type, () => {
     handleUpdate();
   });
 }
 
-export function retrySymbolicateLogNow(log: LogBoxLog) {
-  log.retrySymbolicate(() => {
+export function retrySymbolicateLogNow(type: StackType, log: LogBoxLog) {
+  log.retrySymbolicate(type, () => {
     handleUpdate();
   });
 }
 
-export function symbolicateLogLazy(log: LogBoxLog) {
-  log.symbolicate();
+export function symbolicateLogLazy(type: StackType, log: LogBoxLog) {
+  log.symbolicate(type);
 }
 
 export function clear(): void {

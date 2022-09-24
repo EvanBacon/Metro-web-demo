@@ -5,11 +5,11 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Keyboard, ScrollView, StyleSheet, View } from 'react-native';
 
 import * as LogBoxData from '../Data/LogBoxData';
-import { LogBoxLog, LogLevel } from '../Data/LogBoxLog';
+import { LogBoxLog, LogLevel, StackType } from '../Data/LogBoxLog';
 import { LogBoxInspectorCodeFrame } from './LogBoxInspectorCodeFrame';
 import { LogBoxInspectorFooter } from './LogBoxInspectorFooter';
 import { LogBoxInspectorHeader } from './LogBoxInspectorHeader';
@@ -34,7 +34,8 @@ export function LogBoxInspector(props: Props) {
 
   useEffect(() => {
     if (log) {
-      LogBoxData.symbolicateLogNow(log);
+      LogBoxData.symbolicateLogNow('stack', log);
+      LogBoxData.symbolicateLogNow('component', log);
     }
   }, [log]);
 
@@ -45,8 +46,10 @@ export function LogBoxInspector(props: Props) {
       const lastIndex = logs.length - 1;
       const prevIndex = selected - 1 < 0 ? lastIndex : selected - 1;
       const nextIndex = selected + 1 > lastIndex ? 0 : selected + 1;
-      LogBoxData.symbolicateLogLazy(logs[prevIndex]);
-      LogBoxData.symbolicateLogLazy(logs[nextIndex]);
+      for (const type of ['component', 'stack'] as const) {
+        LogBoxData.symbolicateLogLazy(type, logs[prevIndex]);
+        LogBoxData.symbolicateLogLazy(type, logs[nextIndex]);
+      }
     }
   }, [logs, selectedIndex]);
 
@@ -54,9 +57,9 @@ export function LogBoxInspector(props: Props) {
     Keyboard.dismiss();
   }, []);
 
-  function _handleRetry() {
-    LogBoxData.retrySymbolicateLogNow(log);
-  }
+  const _handleRetry = useCallback((type: StackType) => {
+    LogBoxData.retrySymbolicateLogNow(type, log);
+  }, [log]);
 
   if (log == null) {
     return null;
@@ -89,7 +92,7 @@ const headerTitleMap = {
 };
 
 function LogBoxInspectorBody(
-  props: Partial<{ log: LogBoxLog, onRetry: () => void }>,
+  props: Partial<{ log: LogBoxLog, onRetry: (type: StackType) => void }>,
 ) {
   const [collapsed, setCollapsed] = useState(true);
 
@@ -101,36 +104,38 @@ function LogBoxInspectorBody(
     props.log.type ??
     headerTitleMap[props.log.isComponentError ? 'component' : props.log.level];
 
+  const header = (
+    <LogBoxInspectorMessageHeader
+      collapsed={collapsed}
+      onPress={() => setCollapsed(!collapsed)}
+      message={props.log.message}
+      level={props.log.level}
+      title={headerTitle}
+    />
+  )
+
+  const content = (<>
+    <LogBoxInspectorCodeFrame codeFrame={props.log.codeFrame} />
+    {/* <LogBoxInspectorReactFrames log={props.log} /> */}
+    <LogBoxInspectorStackFrames type='stack' log={props.log} onRetry={props.onRetry.bind(props.onRetry, 'stack')} />
+    {props.log?.componentStack?.length && <LogBoxInspectorStackFrames type='component' log={props.log} onRetry={props.onRetry.bind(props.onRetry, 'component')} />}
+  </>)
+
+
   if (collapsed) {
     return (
       <>
-        <LogBoxInspectorMessageHeader
-          collapsed={collapsed}
-          onPress={() => setCollapsed(!collapsed)}
-          message={props.log.message}
-          level={props.log.level}
-          title={headerTitle}
-        />
+        {header}
         <ScrollView style={styles.scrollBody}>
-          <LogBoxInspectorCodeFrame codeFrame={props.log.codeFrame} />
-          <LogBoxInspectorReactFrames log={props.log} />
-          <LogBoxInspectorStackFrames log={props.log} onRetry={props.onRetry} />
+          {content}
         </ScrollView>
       </>
     );
   }
   return (
     <ScrollView style={styles.scrollBody}>
-      <LogBoxInspectorMessageHeader
-        collapsed={collapsed}
-        onPress={() => setCollapsed(!collapsed)}
-        message={props.log.message}
-        level={props.log.level}
-        title={headerTitle}
-      />
-      <LogBoxInspectorCodeFrame codeFrame={props.log.codeFrame} />
-      <LogBoxInspectorReactFrames log={props.log} />
-      <LogBoxInspectorStackFrames log={props.log} onRetry={props.onRetry} />
+      {header}
+      {content}
     </ScrollView>
   );
 }
