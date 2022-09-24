@@ -125,7 +125,7 @@ function StackFrameList(props): JSX.Element {
 }
 
 function StackFrameFooter(
-  props: Partial<{ message: string, onPress: () => void }>,
+  props: { message: string, onPress: () => void },
 ) {
   return (
     <View style={stackStyles.collapseContainer}>
