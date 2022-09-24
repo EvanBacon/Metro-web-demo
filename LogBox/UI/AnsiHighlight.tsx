@@ -36,8 +36,7 @@ export function Ansi({
 }: {
   text: string,
   style: StyleProp<TextStyle>,
-
-} & any) {
+}) {
   let commonWhitespaceLength = Infinity;
   const parsedLines = text.split(/\n/).map(line =>
     Anser.ansiToJson(line, {

@@ -6,8 +6,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { ReactNode, useCallback } from 'react';
+import { ReactNode, useCallback, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { useRejectionHandler } from './useRejectionHandler';
 import * as LogBoxData from './Data/LogBoxData';
 import { LogBoxLog } from './Data/LogBoxLog';
 import { LogBoxLogNotification } from './UI/LogBoxNotification';
@@ -21,6 +22,7 @@ type Props = {
 
 export function _LogBoxNotificationContainer(props: Props) {
   const { logs } = props;
+  const hasError = useRejectionHandler();
 
   const onDismissWarns = useCallback(() => {
     LogBoxData.clearWarnings();

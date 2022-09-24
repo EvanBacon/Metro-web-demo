@@ -192,7 +192,7 @@ const toastStyles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     marginTop: 0.5,
-    backgroundColor: LogBoxStyle.getTextColor(1),
+    // backgroundColor: LogBoxStyle.getTextColor(1),
   },
   press: {
     height: 48,
