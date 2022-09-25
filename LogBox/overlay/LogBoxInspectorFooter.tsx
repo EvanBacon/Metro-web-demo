@@ -7,7 +7,6 @@
  */
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { LogBoxButton } from '../UI/LogBoxButton';
 import * as LogBoxStyle from '../UI/LogBoxStyle';
 
 import { useSelectedLog } from '../Data/LogContext';
@@ -47,10 +46,6 @@ function FooterButton({ text, onPress }: {
 }) {
   return (
     <Pressable
-      backgroundColor={{
-        default: 'transparent',
-        pressed: LogBoxStyle.getBackgroundDarkColor(),
-      }}
       onPress={onPress}
       style={{ flex: 1 }}>
       {({ hovered, pressed }) => (

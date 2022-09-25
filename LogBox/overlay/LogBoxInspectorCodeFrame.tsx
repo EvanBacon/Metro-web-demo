@@ -15,15 +15,12 @@ import { LogBoxButton } from '../UI/LogBoxButton';
 import { LogBoxInspectorSection } from './LogBoxInspectorSection';
 import * as LogBoxStyle from '../UI/LogBoxStyle';
 
-
 import type { CodeFrame } from '../Data/parseLogBoxLog';
 import { formatProjectFileName } from '../formatProjectFilePath';
 
-type Props = {
+export function LogBoxInspectorCodeFrame(props: {
   codeFrame?: CodeFrame,
-};
-
-export function LogBoxInspectorCodeFrame(props: Props) {
+}) {
   const codeFrame = props.codeFrame;
   if (codeFrame == null) {
     return null;
